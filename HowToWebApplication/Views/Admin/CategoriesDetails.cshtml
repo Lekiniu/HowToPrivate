@@ -1,0 +1,28 @@
+﻿@model HowToWebApplication.Models.categories
+
+<div>
+    <h4>categories</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.categories2.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.categories2.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditCategories", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "CategoriesList")
+</p>

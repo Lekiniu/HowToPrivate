@@ -1,0 +1,119 @@
+﻿@model IEnumerable<HowToWebApplication.Models.articles>
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+
+<p>
+    @Html.ActionLink("Create New", "CreateArticles")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Main Images
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isBlocked)
+        </th>
+        <th>
+            Authors
+        </th>
+        <th>
+            Ratings
+        </th>
+        <th>
+            Categories
+        </th>
+        <th></th>
+    </tr>
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{var counter = 0;}
+                @if (item.images.Count() != 0)
+                {
+                    foreach (var pic in item.images)
+                    {
+                        if (pic.isMain == true)
+                        {
+                            counter++;
+                            <div id="mainPic">
+                                <img src="@Url.Content(pic.url)" style=" width: 50px; height:50px;" />
+                            </div>
+                        }
+                    }
+                    if (counter == 0)
+                    {
+                        <div id="mainPic">
+                            <img src="/images/NoImage.png" style=" width: 50px; height:50px;" />
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div id="mainPic">
+                        <img src="/images/NoImage.png" style=" width: 50px; height:50px;" />
+                    </div>
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isBlocked)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.users.name)  @Html.DisplayFor(modelItem => item.users.surname)
+            </td>
+            <td>
+
+                @if (item.ratings.Count() != 0)
+                {
+
+                    @Html.DisplayFor(modelItem => item.ratings.Average(e => e.rating))
+                    break;
+                }
+                else
+                {
+                    <p>---------</p>
+                }
+
+            </td>
+            <!--გამოსაცდელია-->
+            <td>
+                @foreach (var cat in item.articleCategories)
+                {
+                    foreach (var category in ViewBag.Categories)
+                    {
+                        if (cat.categoriesId == category.Id)
+                        {
+                            <p>@category.name</p>
+                        }
+                    }
+                }
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "EditArticles", new { id = item.Id }) |
+                @Html.ActionLink("Details", "ArticlesDetails", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteArticle", new { id = item.Id }) |
+
+            </td>
+        </tr>
+    }
+</table>

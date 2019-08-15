@@ -1,0 +1,51 @@
+﻿@using HowToWebApplication.Helpers;
+
+
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@btnHelper("მომხმარებლები", "UserList", "Admin")
+
+@btnHelper("კონტაქტი და ჩვენს შესახებ", "Index", "Admin")
+
+@btnHelper("კატეგორიები", "CategoriesList", "Admin")
+
+@btnHelper("სტატიები", "ArticlesList", "Admin")
+
+@btnHelper("მოთხოვნები", "RequestsList", "Admin")
+
+<br />
+<br />
+
+@if (LoginHelper.IsLoggedIn())
+{
+   
+    <button class="btn btn-success">
+        @Html.ActionLink("მომხმარებლის სტატიები", "ArticlesList", "Users", new { id = LoginHelper.CurrentUser().Id }, null)
+    </button>
+    <br />
+    <br />
+    <button class="btn btn-success">
+        @Html.ActionLink("მომხმარებლის მოთხოვნები", "RequestsList", "Users", new { id = LoginHelper.CurrentUser().Id },null)
+    </button>
+}
+
+
+
+
+@helper btnHelper(string linkName, string actionName, string controllerName)
+{
+    <br />
+    <br />
+    <button class="btn btn-success">
+        @Html.ActionLink(linkName, actionName, controllerName, null, new { @style = "color:white" })
+    </button>
+}

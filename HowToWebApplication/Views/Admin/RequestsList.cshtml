@@ -1,0 +1,159 @@
+﻿@model IEnumerable<HowToWebApplication.Models.requests>
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+<p>
+    @Html.ActionLink("Create New", "CreateRequests")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.upvote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isDone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.users.name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.upvote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isDone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.users.name)  @Html.DisplayFor(modelItem => item.users.surname)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditRequests", new { id = item.Id }) |
+                @Html.ActionLink("Details", "RequestsDetails", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteRequests", new { id = item.Id }) |
+                @if (item.isDone == false)
+                {
+
+
+                    @Html.ActionLink("Done", "DoneRequest", new { id = item.Id }, new { @class = "Done-link" })
+                }
+                else
+                {
+
+
+                    @Html.ActionLink("UnDone", "UnDoneRequest", new { id = item.Id }, new { @class = "UnDone-link" })
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<div id="Done-dialog" title="Confirmation">
+    <p>Are you sure you want to check this request as Done?</p>
+</div>
+
+<div id="UnDone-dialog" title="Confirmation">
+    <p>Are you sure you want to check this request as UnDone?</p>
+</div>
+
+<script type="text/javascript">
+
+    var BlockLinkObj;
+    // block Link
+    $(".Done-link").click(function () {
+        BlockLinkObj = $(this);  //for future use
+        $('#Done-dialog').dialog('open');
+        return false; // prevents the default behaviour
+    });
+
+
+    $('#Done-dialog').dialog({
+        autoOpen: false, width: 400, resizable: false, modal: true, //Dialog options
+        buttons: {
+            "Continue": function () {
+                $.post(BlockLinkObj[0].href, function (data) {  //Post to action
+                    if (data == '<%= Boolean.TrueString %>') {
+                        BlockLinkObj.closest("tr").hide('fast'); //Hide Row
+
+                        //(optional) Display Confirmation
+                    }
+                    else {
+                        //(optional) Display Error
+                    }
+                });
+                $(this).dialog("close");
+                location.reload();
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript">
+
+    var BlockLinkObj;
+    // block Link
+    $(".UnDone-link").click(function () {
+        BlockLinkObj = $(this);  //for future use
+        $('#UnDone-dialog').dialog('open');
+        return false; // prevents the default behaviour
+    });
+
+
+    $('#UnDone-dialog').dialog({
+        autoOpen: false, width: 400, resizable: false, modal: true, //Dialog options
+        buttons: {
+            "Continue": function () {
+                $.post(BlockLinkObj[0].href, function (data) {  //Post to action
+                    if (data == '<%= Boolean.TrueString %>') {
+                        BlockLinkObj.closest("tr").hide('fast'); //Hide Row
+
+                        //(optional) Display Confirmation
+                    }
+                    else {
+                        //(optional) Display Error
+                    }
+                });
+                $(this).dialog("close");
+                location.reload();
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+</script>

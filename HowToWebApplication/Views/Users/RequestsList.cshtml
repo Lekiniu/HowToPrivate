@@ -1,0 +1,65 @@
+﻿@model IEnumerable<HowToWebApplication.Models.requests>
+
+<p>
+    @Html.ActionLink("Create New", "CreateRequests")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.upvote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isDone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.users.name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.upvote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isDone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.users.name)  @Html.DisplayFor(modelItem => item.users.surname)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditRequests", new { id = item.Id }) |
+                @Html.ActionLink("Details", "RequestsDetails", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteRequests", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+

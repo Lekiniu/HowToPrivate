@@ -1,0 +1,192 @@
+﻿@model HowToWebApplication.Models.articles
+
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+    <style>
+        #PhotoId {
+            background-color: #2e6da4;
+            border-color: #2e6da4;
+            color: white;
+        }
+    </style>
+</head>
+<div>
+    <h4>articles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.content)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.content)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isBlocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isBlocked)
+        </dd>
+
+        <dt>
+            Author
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.users.name)  @Html.DisplayFor(model => model.users.surname)
+        </dd>
+
+        <dt>
+            Categories
+        </dt>
+
+        <dd>
+            @foreach (var cat in Model.articleCategories)
+            {
+                foreach (var category in ViewBag.Categories)
+                {
+                    if (cat.categoriesId == category.Id)
+                    {
+                        @category.name <text>&nbsp;</text>
+                    }
+                }
+
+            }
+        </dd>
+        <dt>
+            Request(s)
+        </dt>
+        @if (ViewBag.RequestIDs != null)
+        {
+            <dd>
+                @foreach (var request in ViewBag.RequestIDs)
+                {
+                    @*@request.title <text>&nbsp;</text>*@
+                    @Html.ActionLink((String)request.title, "RequestsDetails", new { id = request.Id }) <text>&nbsp;</text>
+
+                }
+            </dd>
+        }
+        else
+        {
+            <dd>
+                <p>მოთხოვნა  არაა დამატებული</p>
+            </dd>
+        }
+
+        <dt>
+            images
+        </dt>
+
+        <dd>
+            <div class="pic">
+                @if (Model.images.Count != 0)
+                {
+                    foreach (var item in Model.images)
+                    {
+                        <div class="img" style="position:relative; min-width: 230px; min-height: 230px; padding: 13px; display: inline-block; ">
+                            <img src="@Url.Content(item.url)" style="width:200px" ; />
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div> სურათი არაა დამატებული </div>
+                }
+            </div>
+        </dd>
+
+        <dt>
+            Main image
+        </dt>
+        <dd>
+            <div class="Mainpic">
+                @{var counter = 0;}
+                @if (Model.images.Count != 0)
+                {
+                    foreach (var item in Model.images)
+                    {
+                        if (item.isMain == true)
+                        {
+                            counter++;
+                            <div class="img" style="position:relative; min-width: 230px; min-height: 230px; padding: 13px; display: inline-block; ">
+                                <img src="@Url.Content(item.url)" style="width:200px" ; />
+                            </div>
+                        }
+                    }
+                    if (counter == 0)
+                    {
+                        <div> მთავარი სურათი არაა დამატებული </div>
+                    }
+                }
+                else 
+                {
+                    <div> მთავარი სურათი არაა დამატებული </div>
+                }
+            </div>
+        </dd>
+    </dl>
+</div>
+
+
+<p>
+    @Html.ActionLink("Edit", "EditArticles", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "ArticlesList")
+</p>
+
+<script type="text/javascript">
+    $(document).on("click", "#PhotoId", function () {
+            if (confirm('Are you sure?')){
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("DeleteImages", "Admin", new{ id = Model.Id })',
+                    context:this,
+                    success: function () {
+                        $(this).closest('div').remove();
+                            }
+                    });
+            }
+            return false;
+        });
+</script>
+
+
+@*<script type="text/javascript">
+        $(document).on("click", "#AddPhoto", function () {
+            if (confirm('Are you sure?')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddImage", "Admin", new{ id = Model.Id, images })',
+                        context:this,
+                        success: function () {
+                            alert("image was added");
+                                }
+                        });
+                }
+                return false;
+            });
+    </script>*@

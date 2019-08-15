@@ -1,0 +1,1031 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HowToDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="articleCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="articlesId" Type="int" Nullable="false" />
+          <Property Name="categoriesId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="articles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="isBlocked" Type="bit" Nullable="false" />
+          <Property Name="usersId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="articlesTags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="articlesId" Type="int" Nullable="false" />
+          <Property Name="tagsId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="parentId" Type="int" />
+        </EntityType>
+        <EntityType Name="favourites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="articlesId" Type="int" Nullable="false" />
+          <Property Name="usersId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="articlesId" Type="int" />
+          <Property Name="usersId" Type="int" />
+          <Property Name="isMain" Type="bit" />
+        </EntityType>
+        <EntityType Name="ratings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rating" Type="tinyint" Nullable="false" />
+          <Property Name="articlesId" Type="int" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="requests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="number" Type="int" />
+          <Property Name="content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="upvote" Type="int" Nullable="false" />
+          <Property Name="isDone" Type="bit" Nullable="false" />
+          <Property Name="usersId" Type="int" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="requestsArticles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="requestsId" Type="int" />
+          <Property Name="articlesId" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="registerDate" Type="datetime" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="categoriesId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usersCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="websiteInfos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="facebookUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="instagramUrl" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_articleCategories_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="1" />
+          <End Role="articleCategories" Type="Self.articleCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articleCategories">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articleCategories_categories">
+          <End Role="categories" Type="Self.categories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="articleCategories" Type="Self.articleCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articleCategories">
+              <PropertyRef Name="categoriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articles_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="articles" Type="Self.articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articles">
+              <PropertyRef Name="usersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articlesTags_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="1" />
+          <End Role="articlesTags" Type="Self.articlesTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articlesTags">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articlesTags_tags">
+          <End Role="tags" Type="Self.tags" Multiplicity="1" />
+          <End Role="articlesTags" Type="Self.articlesTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articlesTags">
+              <PropertyRef Name="tagsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_categories_categories">
+          <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+          <End Role="categories1" Type="Self.categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="categories1">
+              <PropertyRef Name="parentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_favourites_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="1" />
+          <End Role="favourites" Type="Self.favourites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="favourites">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_favourites_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="favourites" Type="Self.favourites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="favourites">
+              <PropertyRef Name="usersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_media_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="0..1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_media_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="usersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ratings_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="1" />
+          <End Role="ratings" Type="Self.ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ratings">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ratings_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="ratings" Type="Self.ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ratings">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requests_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="requests" Type="Self.requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="usersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requestsArticles_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="0..1" />
+          <End Role="requestsArticles" Type="Self.requestsArticles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="requestsArticles">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requestsArticles_requests">
+          <End Role="requests" Type="Self.requests" Multiplicity="0..1" />
+          <End Role="requestsArticles" Type="Self.requestsArticles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="requests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="requestsArticles">
+              <PropertyRef Name="requestsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_usersCategories">
+          <End Role="usersCategories" Type="Self.usersCategories" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usersCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="categoriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HowToDbModelStoreContainer">
+          <EntitySet Name="articleCategories" EntityType="Self.articleCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="articles" EntityType="Self.articles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="articlesTags" EntityType="Self.articlesTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="favourites" EntityType="Self.favourites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="images" EntityType="Self.images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ratings" EntityType="Self.ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requests" EntityType="Self.requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requestsArticles" EntityType="Self.requestsArticles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tags" EntityType="Self.tags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usersCategories" EntityType="Self.usersCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="websiteInfos" EntityType="Self.websiteInfos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_articleCategories_articles" Association="Self.FK_articleCategories_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="articleCategories" EntitySet="articleCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articleCategories_categories" Association="Self.FK_articleCategories_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="articleCategories" EntitySet="articleCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articles_users" Association="Self.FK_articles_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="articles" EntitySet="articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articlesTags_articles" Association="Self.FK_articlesTags_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="articlesTags" EntitySet="articlesTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articlesTags_tags" Association="Self.FK_articlesTags_tags">
+            <End Role="tags" EntitySet="tags" />
+            <End Role="articlesTags" EntitySet="articlesTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_categories_categories" Association="Self.FK_categories_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="categories1" EntitySet="categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_favourites_articles" Association="Self.FK_favourites_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="favourites" EntitySet="favourites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_favourites_users" Association="Self.FK_favourites_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="favourites" EntitySet="favourites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_media_articles" Association="Self.FK_media_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_media_users" Association="Self.FK_media_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ratings_articles" Association="Self.FK_ratings_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="ratings" EntitySet="ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ratings_users" Association="Self.FK_ratings_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="ratings" EntitySet="ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requests_users" Association="Self.FK_requests_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requestsArticles_articles" Association="Self.FK_requestsArticles_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="requestsArticles" EntitySet="requestsArticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requestsArticles_requests" Association="Self.FK_requestsArticles_requests">
+            <End Role="requests" EntitySet="requests" />
+            <End Role="requestsArticles" EntitySet="requestsArticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_usersCategories" Association="Self.FK_users_usersCategories">
+            <End Role="usersCategories" EntitySet="usersCategories" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HowToDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="articleCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="articlesId" Type="Int32" Nullable="false" />
+          <Property Name="categoriesId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="articles" Relationship="Self.FK_articleCategories_articles" FromRole="articleCategories" ToRole="articles" />
+          <NavigationProperty Name="categories" Relationship="Self.FK_articleCategories_categories" FromRole="articleCategories" ToRole="categories" />
+        </EntityType>
+        <EntityType Name="articles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isBlocked" Type="Boolean" Nullable="false" />
+          <Property Name="usersId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="articleCategories" Relationship="Self.FK_articleCategories_articles" FromRole="articles" ToRole="articleCategories" />
+          <NavigationProperty Name="users" Relationship="Self.FK_articles_users" FromRole="articles" ToRole="users" />
+          <NavigationProperty Name="articlesTags" Relationship="Self.FK_articlesTags_articles" FromRole="articles" ToRole="articlesTags" />
+          <NavigationProperty Name="favourites" Relationship="Self.FK_favourites_articles" FromRole="articles" ToRole="favourites" />
+          <NavigationProperty Name="images" Relationship="Self.FK_media_articles" FromRole="articles" ToRole="images" />
+          <NavigationProperty Name="ratings" Relationship="Self.FK_ratings_articles" FromRole="articles" ToRole="ratings" />
+          <NavigationProperty Name="requestsArticles" Relationship="Self.FK_requestsArticles_articles" FromRole="articles" ToRole="requestsArticles" />
+        </EntityType>
+        <EntityType Name="articlesTags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="articlesId" Type="Int32" Nullable="false" />
+          <Property Name="tagsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="articles" Relationship="Self.FK_articlesTags_articles" FromRole="articlesTags" ToRole="articles" />
+          <NavigationProperty Name="tags" Relationship="Self.FK_articlesTags_tags" FromRole="articlesTags" ToRole="tags" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="parentId" Type="Int32" />
+          <NavigationProperty Name="articleCategories" Relationship="Self.FK_articleCategories_categories" FromRole="categories" ToRole="articleCategories" />
+          <NavigationProperty Name="categories1" Relationship="Self.FK_categories_categories" FromRole="categories" ToRole="categories1" />
+          <NavigationProperty Name="categories2" Relationship="Self.FK_categories_categories" FromRole="categories1" ToRole="categories" />
+        </EntityType>
+        <EntityType Name="favourites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="articlesId" Type="Int32" Nullable="false" />
+          <Property Name="usersId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="articles" Relationship="Self.FK_favourites_articles" FromRole="favourites" ToRole="articles" />
+          <NavigationProperty Name="users" Relationship="Self.FK_favourites_users" FromRole="favourites" ToRole="users" />
+        </EntityType>
+        <EntityType Name="images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="articlesId" Type="Int32" />
+          <Property Name="usersId" Type="Int32" />
+          <NavigationProperty Name="articles" Relationship="Self.FK_media_articles" FromRole="images" ToRole="articles" />
+          <NavigationProperty Name="users" Relationship="Self.FK_media_users" FromRole="images" ToRole="users" />
+          <Property Name="isMain" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ratings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rating" Type="Byte" Nullable="false" />
+          <Property Name="articlesId" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="articles" Relationship="Self.FK_ratings_articles" FromRole="ratings" ToRole="articles" />
+          <NavigationProperty Name="users" Relationship="Self.FK_ratings_users" FromRole="ratings" ToRole="users" />
+        </EntityType>
+        <EntityType Name="requests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="number" Type="Int32" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="upvote" Type="Int32" Nullable="false" />
+          <Property Name="isDone" Type="Boolean" Nullable="false" />
+          <Property Name="usersId" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="users" Relationship="Self.FK_requests_users" FromRole="requests" ToRole="users" />
+          <NavigationProperty Name="requestsArticles" Relationship="Self.FK_requestsArticles_requests" FromRole="requests" ToRole="requestsArticles" />
+        </EntityType>
+        <EntityType Name="requestsArticles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="requestsId" Type="Int32" />
+          <Property Name="articlesId" Type="Int32" />
+          <NavigationProperty Name="articles" Relationship="Self.FK_requestsArticles_articles" FromRole="requestsArticles" ToRole="articles" />
+          <NavigationProperty Name="requests" Relationship="Self.FK_requestsArticles_requests" FromRole="requestsArticles" ToRole="requests" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="articlesTags" Relationship="Self.FK_articlesTags_tags" FromRole="tags" ToRole="articlesTags" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="registerDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="categoriesId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="articles" Relationship="Self.FK_articles_users" FromRole="users" ToRole="articles" />
+          <NavigationProperty Name="favourites" Relationship="Self.FK_favourites_users" FromRole="users" ToRole="favourites" />
+          <NavigationProperty Name="images" Relationship="Self.FK_media_users" FromRole="users" ToRole="images" />
+          <NavigationProperty Name="ratings" Relationship="Self.FK_ratings_users" FromRole="users" ToRole="ratings" />
+          <NavigationProperty Name="requests" Relationship="Self.FK_requests_users" FromRole="users" ToRole="requests" />
+          <NavigationProperty Name="usersCategories" Relationship="Self.FK_users_usersCategories" FromRole="users" ToRole="usersCategories" />
+        </EntityType>
+        <EntityType Name="usersCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_users_usersCategories" FromRole="usersCategories" ToRole="users" />
+        </EntityType>
+        <EntityType Name="websiteInfos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="facebookUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="instagramUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_articleCategories_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="1" />
+          <End Role="articleCategories" Type="Self.articleCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articleCategories">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articleCategories_categories">
+          <End Role="categories" Type="Self.categories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="articleCategories" Type="Self.articleCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articleCategories">
+              <PropertyRef Name="categoriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articles_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="articles" Type="Self.articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articles">
+              <PropertyRef Name="usersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articlesTags_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="1" />
+          <End Role="articlesTags" Type="Self.articlesTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articlesTags">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_favourites_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="1" />
+          <End Role="favourites" Type="Self.favourites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="favourites">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_media_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="0..1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ratings_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="1" />
+          <End Role="ratings" Type="Self.ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ratings">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requestsArticles_articles">
+          <End Role="articles" Type="Self.articles" Multiplicity="0..1" />
+          <End Role="requestsArticles" Type="Self.requestsArticles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="requestsArticles">
+              <PropertyRef Name="articlesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articlesTags_tags">
+          <End Role="tags" Type="Self.tags" Multiplicity="1" />
+          <End Role="articlesTags" Type="Self.articlesTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="articlesTags">
+              <PropertyRef Name="tagsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_categories_categories">
+          <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+          <End Role="categories1" Type="Self.categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="categories1">
+              <PropertyRef Name="parentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_favourites_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="favourites" Type="Self.favourites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="favourites">
+              <PropertyRef Name="usersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_media_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="usersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ratings_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="ratings" Type="Self.ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ratings">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requests_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="requests" Type="Self.requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="usersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requestsArticles_requests">
+          <End Role="requests" Type="Self.requests" Multiplicity="0..1" />
+          <End Role="requestsArticles" Type="Self.requestsArticles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="requests">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="requestsArticles">
+              <PropertyRef Name="requestsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_usersCategories">
+          <End Role="usersCategories" Type="Self.usersCategories" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usersCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="categoriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HowToDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="articleCategories" EntityType="Self.articleCategories" />
+          <EntitySet Name="articles" EntityType="Self.articles" />
+          <EntitySet Name="articlesTags" EntityType="Self.articlesTags" />
+          <EntitySet Name="categories" EntityType="Self.categories" />
+          <EntitySet Name="favourites" EntityType="Self.favourites" />
+          <EntitySet Name="images" EntityType="Self.images" />
+          <EntitySet Name="ratings" EntityType="Self.ratings" />
+          <EntitySet Name="requests" EntityType="Self.requests" />
+          <EntitySet Name="requestsArticles" EntityType="Self.requestsArticles" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tags" EntityType="Self.tags" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="usersCategories" EntityType="Self.usersCategories" />
+          <EntitySet Name="websiteInfos" EntityType="Self.websiteInfos" />
+          <AssociationSet Name="FK_articleCategories_articles" Association="Self.FK_articleCategories_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="articleCategories" EntitySet="articleCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articleCategories_categories" Association="Self.FK_articleCategories_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="articleCategories" EntitySet="articleCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articles_users" Association="Self.FK_articles_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="articles" EntitySet="articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articlesTags_articles" Association="Self.FK_articlesTags_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="articlesTags" EntitySet="articlesTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_favourites_articles" Association="Self.FK_favourites_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="favourites" EntitySet="favourites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_media_articles" Association="Self.FK_media_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ratings_articles" Association="Self.FK_ratings_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="ratings" EntitySet="ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requestsArticles_articles" Association="Self.FK_requestsArticles_articles">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="requestsArticles" EntitySet="requestsArticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articlesTags_tags" Association="Self.FK_articlesTags_tags">
+            <End Role="tags" EntitySet="tags" />
+            <End Role="articlesTags" EntitySet="articlesTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_categories_categories" Association="Self.FK_categories_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="categories1" EntitySet="categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_favourites_users" Association="Self.FK_favourites_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="favourites" EntitySet="favourites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_media_users" Association="Self.FK_media_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ratings_users" Association="Self.FK_ratings_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="ratings" EntitySet="ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requests_users" Association="Self.FK_requests_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requestsArticles_requests" Association="Self.FK_requestsArticles_requests">
+            <End Role="requests" EntitySet="requests" />
+            <End Role="requestsArticles" EntitySet="requestsArticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_usersCategories" Association="Self.FK_users_usersCategories">
+            <End Role="usersCategories" EntitySet="usersCategories" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HowToDbModelStoreContainer" CdmEntityContainer="HowToDbEntities">
+          <EntitySetMapping Name="articleCategories">
+            <EntityTypeMapping TypeName="HowToDbModel.articleCategories">
+              <MappingFragment StoreEntitySet="articleCategories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="articlesId" ColumnName="articlesId" />
+                <ScalarProperty Name="categoriesId" ColumnName="categoriesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="articles">
+            <EntityTypeMapping TypeName="HowToDbModel.articles">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="isBlocked" ColumnName="isBlocked" />
+                <ScalarProperty Name="usersId" ColumnName="usersId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="articlesTags">
+            <EntityTypeMapping TypeName="HowToDbModel.articlesTags">
+              <MappingFragment StoreEntitySet="articlesTags">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="articlesId" ColumnName="articlesId" />
+                <ScalarProperty Name="tagsId" ColumnName="tagsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="HowToDbModel.categories">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="favourites">
+            <EntityTypeMapping TypeName="HowToDbModel.favourites">
+              <MappingFragment StoreEntitySet="favourites">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="articlesId" ColumnName="articlesId" />
+                <ScalarProperty Name="usersId" ColumnName="usersId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="images">
+            <EntityTypeMapping TypeName="HowToDbModel.images">
+              <MappingFragment StoreEntitySet="images">
+                <ScalarProperty Name="isMain" ColumnName="isMain" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="articlesId" ColumnName="articlesId" />
+                <ScalarProperty Name="usersId" ColumnName="usersId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ratings">
+            <EntityTypeMapping TypeName="HowToDbModel.ratings">
+              <MappingFragment StoreEntitySet="ratings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="articlesId" ColumnName="articlesId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requests">
+            <EntityTypeMapping TypeName="HowToDbModel.requests">
+              <MappingFragment StoreEntitySet="requests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="upvote" ColumnName="upvote" />
+                <ScalarProperty Name="isDone" ColumnName="isDone" />
+                <ScalarProperty Name="usersId" ColumnName="usersId" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requestsArticles">
+            <EntityTypeMapping TypeName="HowToDbModel.requestsArticles">
+              <MappingFragment StoreEntitySet="requestsArticles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="requestsId" ColumnName="requestsId" />
+                <ScalarProperty Name="articlesId" ColumnName="articlesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HowToDbModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tags">
+            <EntityTypeMapping TypeName="HowToDbModel.tags">
+              <MappingFragment StoreEntitySet="tags">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="HowToDbModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="registerDate" ColumnName="registerDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="categoriesId" ColumnName="categoriesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usersCategories">
+            <EntityTypeMapping TypeName="HowToDbModel.usersCategories">
+              <MappingFragment StoreEntitySet="usersCategories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="websiteInfos">
+            <EntityTypeMapping TypeName="HowToDbModel.websiteInfos">
+              <MappingFragment StoreEntitySet="websiteInfos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="facebookUrl" ColumnName="facebookUrl" />
+                <ScalarProperty Name="instagramUrl" ColumnName="instagramUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

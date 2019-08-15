@@ -1,0 +1,141 @@
+﻿@model HowToWebApplication.Models.ArticlesCustomClass
+@using HowToWebApplication.Helpers;
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+
+
+<style>
+    #inputButton {
+        background-color: #2e6da4;
+        border-color: #2e6da4;
+        color: white;
+    }
+
+
+    .long-textbox {
+        max-width: none;
+    }
+</style>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>articles</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control long-textbox" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Content, htmlAttributes: new { @class = "form-control long-textbox ckeditor", @rows = 10 })
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.UsersId, "UsersId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UsersId", ViewBag.UserId as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UsersId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CategoriesList, "CategoriesList", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(M => M.CategoriesList, new MultiSelectList(ViewBag.Categories, "Id", "name"), new { @class = "form-control select-multiple Categories", multiple = "multiple" })
+            @Html.ValidationMessageFor(model => model.CategoriesList, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("მონიშნეთ თუ მოთხოვნის დამატება გსურთ", htmlAttributes: new { @class = "control-label col-md-2" })
+
+        @Html.CheckBox("checkbox", false, new { id = "chkDestination" })
+
+    </div>
+
+    <div class="form-group" id="reqbox">
+        @Html.LabelFor(model => model.RequestsList, "RequestsList", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(M => M.RequestsList, new MultiSelectList(ViewBag.Requests, "Id", "number"), new { @class = "form-control select-multiple request", multiple = "multiple" })
+            @Html.ValidationMessageFor(model => model.RequestsList, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="control-label col-md-2">Add images</div>
+        <div class="col-md-10">
+            <div><input type="file" class="btn btn-primary" name="images" multiple></div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ArticlesList", new { id = LoginHelper.CurrentUser().Id })
+</div>
+
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".Categories").select2({
+            placeholder: "please select categories",
+            maximumSelectionSize: 10,
+            width: 300
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".request").select2({
+            placeholder: "please select request",
+            maximumSelectionSize: 10,
+            width: 300
+        });
+    });
+</script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#reqbox').hide("fast");
+        $('#chkDestination').click(function () {
+            if (!this.checked)
+                $('#reqbox').hide("fast");
+            else
+                $('#reqbox').show("fast");
+        });
+    });
+</script>
+
