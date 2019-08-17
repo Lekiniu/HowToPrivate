@@ -21,32 +21,82 @@
 //    }
 //}
 
-$("#btnCreateAsset").on("click", function () {
+//$("#btnCreateAsset").on("click", function () {
 
-    var url = $(this).data("url");
+//    var url = $(this).data("url");
 
-    $.get(url, function (data) {
-        $('#createAssetContainer').html(data);
+//    $.get(url, function (data) {
+//        $('#createAssetContainer').html(data);
 
-        $('#createAssetModal').modal('show');
+//        $('#createAssetModal').modal('show');
 
+//    });
+
+//});
+
+//function CreateAssetSuccess(data) {
+
+//    if (data != "success") {
+//        $('#createAssetContainer').html(data);
+//        return;
+       
+//    }
+//    $('#createAssetModal').modal('hide');
+//    $('#createAssetContainer').html("");
+  
+   
+//    setTimeout(function () {
+//        window.location.reload();
+//        updateDiv();                 
+//    }, 50);
+//}
+
+
+//$('#btnArticleDetails').on("click", function () {
+
+//    alert("ika");
+//    var url = $(this).data("url");
+
+//    $.get(url, function (data) {
+//        $('#detailsAssetContainer').html(data);
+
+//        $('#detailsAssetModal').modal('show');
+//    });
+
+//});
+
+$(function () {
+    $.ajaxSetup({ cache: false });
+    $("a[data-modal]").on("click", function (e) {
+        $('#myModalContent').load(this.href, function () {
+            $('#myModal').modal({
+                keyboard: true
+            }, 'show');
+            bindForm(this);
+        });
+        return false;
     });
-
 });
 
-function CreateAssetSuccess(data) {
-
-    if (data != "success") {
-        $('#createAssetContainer').html(data);
-        return;
-       
-    }
-    $('#createAssetModal').modal('hide');
-    $('#createAssetContainer').html("");
-    //$("#table").load(location.href + " #table>*", "");
-   
-    setTimeout(function () {
-        window.location.reload();
-        updateDiv();                 
-    }, 50);
+function bindForm(dialog) {
+    $('form', dialog).submit(function () {
+        $('#progress').show();
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (result) {
+                if (result.success) {
+                    $('#myModal').modal('hide');
+                    $('#progress').hide();
+                    location.reload();
+                } else {
+                    $('#progress').hide();
+                    $('#myModalContent').html(result);
+                    bindForm();
+                }
+            }
+        });
+        return false;
+    });
 }
