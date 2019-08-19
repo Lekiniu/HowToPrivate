@@ -1,70 +1,5 @@
 ﻿
 
-//$("#btnCreateArticle").on("click", function () {
-//    var url = $(this).data("url");
-//    $.get(url, function (data) {
-//        $('#createArticleContainer').html(data);
-
-//        $('#createArticleContainer').modal('show');
-//    });
-//});
-
-
-//function CreateArticleSuccess(data) {
-//    if (data != "success") {
-//        $('#createArticleContainer').html(data);
-//        return;
-//    }
-//    else {
-//        $('#createArticleModal').modal('hide');
-//        $('#createArticleContainer').html("");
-//    }
-//}
-
-//$("#btnCreateAsset").on("click", function () {
-
-//    var url = $(this).data("url");
-
-//    $.get(url, function (data) {
-//        $('#createAssetContainer').html(data);
-
-//        $('#createAssetModal').modal('show');
-
-//    });
-
-//});
-
-//function CreateAssetSuccess(data) {
-
-//    if (data != "success") {
-//        $('#createAssetContainer').html(data);
-//        return;
-       
-//    }
-//    $('#createAssetModal').modal('hide');
-//    $('#createAssetContainer').html("");
-  
-   
-//    setTimeout(function () {
-//        window.location.reload();
-//        updateDiv();                 
-//    }, 50);
-//}
-
-
-//$('#btnArticleDetails').on("click", function () {
-
-//    alert("ika");
-//    var url = $(this).data("url");
-
-//    $.get(url, function (data) {
-//        $('#detailsAssetContainer').html(data);
-
-//        $('#detailsAssetModal').modal('show');
-//    });
-
-//});
-
 $(function () {
     $.ajaxSetup({ cache: false });
     $("a[data-modal]").on("click", function (e) {
@@ -79,12 +14,26 @@ $(function () {
 });
 
 function bindForm(dialog) {
+    //var formdata = new FormData();
+
+    //formdata.append("Images", $('#UploadFile').get(0).files[0]); 
+
+    //var other_data = ('form', dialog).serializeArray();
+    //$.each(other_data, function (key, input) { 
+    //    formdata.append(input.name, input.value);
+    //});
+
+    var formdata = new FormData($('form', dialog)).get(0);
+
     $('form', dialog).submit(function () {
         $('#progress').show();
         $.ajax({
             url: this.action,
             type: this.method,
-            data: $(this).serialize(),
+            data: /*$(this).serialize(),*/ formdata,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
             success: function (result) {
                 if (result.success) {
                     $('#myModal').modal('hide');
@@ -100,3 +49,4 @@ function bindForm(dialog) {
         return false;
     });
 }
+

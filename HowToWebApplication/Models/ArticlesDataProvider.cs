@@ -31,7 +31,7 @@ namespace HowToWebApplication.Models
         
 
         //Create
-        public void CreateArticles(ArticlesCustomClass article, HttpPostedFileBase[] images)
+        public void CreateArticles(ArticlesCustomClass article)
         {
             
             var newarticle = new articles();
@@ -55,7 +55,7 @@ namespace HowToWebApplication.Models
             {
                 _db.articles.Add(newarticle);
 
-                _db.SaveChanges();
+                //_db.SaveChanges();
                 foreach (var categoryId in article.CategoriesList)
                 {
 
@@ -65,7 +65,7 @@ namespace HowToWebApplication.Models
                            categoriesId = categoryId,
                            articlesId = newarticle.Id
                        });
-                    //_db.SaveChanges();
+                    _db.SaveChanges();
                 }
 
                 if (article.RequestsList != null)
@@ -79,19 +79,25 @@ namespace HowToWebApplication.Models
                                requestsId = requestID,
                                articlesId = newarticle.Id
                            });
-                        //_db.SaveChanges();
+                        _db.SaveChanges();
                     }
                 }
 
-               
+
                 var mapPath = HostingEnvironment.MapPath("~/images/");
-                foreach (var file in images)
+                foreach (var file in article.Images)
                 {
                     if (file != null)
                     {
                         file.SaveAs(mapPath + file.FileName);
-                        _db.images.Add(new images() { name = file.FileName, url = "~/images/" + file.FileName,
-                                                      articlesId = newarticle.Id, usersId = null, isMain = false });                   
+                        _db.images.Add(new images()
+                        {
+                            name = file.FileName,
+                            url = "~/images/" + file.FileName,
+                            articlesId = newarticle.Id,
+                            usersId = null,
+                            isMain = false
+                        });
                         _db.SaveChanges();
                     }
                     else
@@ -121,7 +127,7 @@ namespace HowToWebApplication.Models
 
 
         //Edit 
-        public void EditArticles(ArticlesCustomClass article, HttpPostedFileBase[] images)
+        public void EditArticles(ArticlesCustomClass article)
         {
             var result = _db.articles.FirstOrDefault(e => e.Id == article.Id);
             var categoryResult = _db.articleCategories.Where(e => e.articlesId == article.Id);
@@ -173,10 +179,10 @@ namespace HowToWebApplication.Models
             }
 
 
-            if (images != null)
+            if (article.Images != null)
             {
                 var mapPath = HostingEnvironment.MapPath("~/images/");
-                foreach (var file in images)
+                foreach (var file in article.Images)
                 {
                     if (file != null)
                     {
@@ -267,6 +273,8 @@ namespace HowToWebApplication.Models
 
         public void FullDeleteArticle(articles article)
         {
+            //var article = _db.articles.FirstOrDefault(e => e.Id == model.Id);
+
             var result = _db.articleCategories.Where(e => e.categoriesId == article.Id).ToList();
 
             var deleteFavourite = _db.favourites.Where(e => e.articlesId == article.Id);
@@ -343,5 +351,45 @@ namespace HowToWebApplication.Models
             var getUser = _db.users.FirstOrDefault(e => e.Id == id);
             return _db.articles.Where(e => e.usersId == getUser.Id);
         }
+
+        public List<requests> GetArticleRequests(int id)
+        {
+            var requestsResult = new List<requests>();
+            var articleResult = _db.requestsArticles.Where(e => e.articlesId == id).ToList();
+
+            if (articleResult.Count() != 0)
+            {
+                foreach (var req in _db.requests)
+                {
+                    foreach (var artReq in articleResult)
+                    {
+                        if (req.Id == artReq.requestsId)
+                        {
+                            requestsResult.Add(req);
+                        }
+                    }
+                }
+            }
+            return requestsResult;
+        }
+
+
+        public List<categories> GetArticleCategories(int id)
+        {
+            var categoriesResult = new List<categories>();
+            var result = GetArticlesById(id);
+            var categoriesList = _db.categories.ToList();
+
+            foreach (var cat in result.articleCategories)
+                foreach (var category in categoriesList)
+                {
+                    if (cat.categoriesId == category.Id)
+                    {
+                        categoriesResult.Add(category);
+                    }
+                }
+            return categoriesResult;
+        }
+
     }
 }

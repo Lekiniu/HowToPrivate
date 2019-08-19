@@ -7,7 +7,7 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>*@
 
 
 <style>
@@ -32,74 +32,76 @@
 </style>
 
 
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Add Asset</h4>
-        </div>
-        @using (Ajax.BeginForm("CreateArticles", "Admin", new AjaxOptions { HttpMethod = "Post", OnSuccess = "CreateAssetSuccess" }, new { enctype = "multipart/form-data" }))
-        {
-            <div class="modal-body">
-                <div class="form-horizontal">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control long-textbox" } })
-                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.Content, htmlAttributes: new { @class = "form-control long-textbox ckeditor", @rows = 10 })
-                            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.CategoriesList, "Categories", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.ListBoxFor(M => M.CategoriesList, new MultiSelectList(Model.Categories, "Id", "name"), new { @class = "form-control select-multiple Categories", multiple = "multiple" })
-                            @Html.ValidationMessageFor(model => model.CategoriesList, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.Label("Check to add requests", htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.CheckBox("checkbox", false, new { id = "chkDestination", style = "margin: 25px 15px 0;" })
-                    </div>
-                    <div class="form-group" id="reqbox">
-                        @Html.LabelFor(model => model.RequestsList, "Requests", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.ListBoxFor(M => M.RequestsList, new MultiSelectList(Model.Requests, "Id", "number"), new { @class = "form-control select-multiple request", multiple = "multiple" })
-                            @Html.ValidationMessageFor(model => model.RequestsList, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="control-label col-md-2">Add images</div>
-                        <div class="col-md-10">
-                            <div><input type="file" class="btn btn-primary" name="images" multiple></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" value="Save" />
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+    <h3 class="modal-title">Add New Article</h3>
 </div>
 
 
+@using (Html.BeginForm("CreateArticles", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+@Html.AntiForgeryToken()
+<div class="modal-body">
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control long-textbox required" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Content, htmlAttributes: new { @class = "form-control long-textbox ckeditor required", @rows = 10 })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoriesList, "Categories", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(M => M.CategoriesList, new MultiSelectList(Model.Categories, "Id", "name"), new { @class = "form-control select-multiple Categories required", multiple = "multiple" })
+                @Html.ValidationMessageFor(model => model.CategoriesList, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Check to add requests", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.CheckBox("checkbox", false, new { id = "chkDestination", style = "margin: 25px 15px 0;" })
+        </div>
+        <div class="form-group" id="reqbox">
+            @Html.LabelFor(model => model.RequestsList, "Requests", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(M => M.RequestsList, new MultiSelectList(Model.Requests, "Id", "title"), new { @class = "form-control select-multiple request ", multiple = "multiple" })
+                @Html.ValidationMessageFor(model => model.RequestsList, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="uploader" class="form-group">
+            <div class="control-label col-md-2">Add images</div>
+            <div class="col-md-10">
+                <div><input type="file" id="UploadFile" class="btn btn-primary" name="Images" multiple></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" value="Save" />
+        </div>
+    </div>
+</div>
+}
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
 
 
 

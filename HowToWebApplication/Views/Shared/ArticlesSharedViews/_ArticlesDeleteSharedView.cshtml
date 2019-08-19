@@ -1,0 +1,142 @@
+﻿@model HowToWebApplication.Models.ArticlesCustomClass
+
+@*@ViewContext.Controller.ViewBag.Categories*@
+@ViewContext.Controller.ViewBag.RequestIDs
+
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+    <h3 class="modal-title">Phone Detail</h3>
+</div>
+
+<div class="modal-body">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsBlocked)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsBlocked)
+        </dd>
+        <dt>
+            Author
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.name)  @Html.DisplayFor(model => model.User.surname)
+        </dd>
+        <dt>
+            Categories
+        </dt>
+        <dd>
+            @foreach (var item in Model.Categories)
+            {
+                @item.name;
+            }
+        </dd>
+        <dt>
+            Requests
+        </dt>
+        <dd>
+            @foreach (var item in Model.Requests)
+            {
+                @item.title;
+            }
+        </dd>
+
+        <dt>
+            images
+        </dt>
+        <dd>
+            <div class="pic">
+                @if (Model.ImagesList.ToList().Count != 0)
+                {
+                    foreach (var item in Model.ImagesList.ToList())
+                    {
+                        <div class="img" style="position:relative; min-width: 230px; min-height: 230px; padding: 13px; display: inline-block; ">
+                            <img src="@Url.Content(item.url)" style="width:200px" ; />
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div> სურათი არაა დამატებული </div>
+                }
+            </div>
+        </dd>
+        <dt>
+            Main image
+        </dt>
+        <dd>
+            <div class="Mainpic">
+                @{var counter = 0;}
+                @if (Model.ImagesList.ToList().Count != 0)
+                {
+                    foreach (var item in Model.ImagesList.ToList())
+                    {
+                        if (item.isMain == true)
+                        {
+                            counter++;
+                            <div class="img" style="position:relative; min-width: 230px; min-height: 230px; padding: 13px; display: inline-block; ">
+                                <img src="@Url.Content(item.url)" style="width:200px" ; />
+                            </div>
+                        }
+                    }
+                    if (counter == 0)
+                    {
+                        <div> მთავარი სურათი არაა დამატებული </div>
+                    }
+                }
+                else
+                {
+                    <div> მთავარი სურათი არაა დამატებული </div>
+                }
+            </div>
+        </dd>
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-sm-9 col-sm-offset-3">
+                <h3>
+                    <span class="label label-danger">
+                        Are you sure to delete this phone?
+                    </span>
+                </h3>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" data-dismiss="modal">Close</button>
+        <input class="btn btn-danger" type="submit" value="Yes" />
+    </div>
+    }
+</div>
+
+
+
+    
+
+
+<script src="~/Scripts/Json Scripts/articleJson.js"></script>

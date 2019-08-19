@@ -23,6 +23,15 @@ namespace HowToWebApplication.Models
         [Display(Name = "Content")]
         public string Content { get; set; }
 
+       
+        [Display(Name = "Date")]
+        public DateTime Date { get; set; }
+
+        [Display(Name = "IsBlocked")]
+        public bool IsBlocked { get; set; }
+
+        [Display(Name = "User")]
+        public users User { get; set; }
 
         public int UsersId { get; set; }
 
@@ -30,6 +39,9 @@ namespace HowToWebApplication.Models
 
         public List<requests> Requests { get; set; }
 
+        public HttpPostedFileBase[] Images { get; set; }
+
+        public IEnumerable<images> ImagesList { get; set; }
 
         [Required]
         [Display(Name = "Category")]

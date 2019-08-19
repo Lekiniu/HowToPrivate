@@ -55,111 +55,75 @@ namespace HowToWebApplication.Controllers
         public ActionResult ArticlesDetails(int id)
         {
 
-            var articleResult = _db.requestsArticles.Where(e => e.articlesId == id).ToList();
-
-
-            if (articleResult.Count() != 0)
-            {
-                var requests = new List<requests>();
-                foreach (var req in _db.requests)
-                {
-                    foreach (var artReq in articleResult)
-                    {
-                        if (req.Id == artReq.requestsId)
-                        {
-                            requests.Add(req);
-                        }
-                    }
-                }
-
-                if (requests != null)
-                {
-                    ViewBag.RequestIDs = requests;
-                }
-            }
-            ViewBag.Categories = _db.categories.ToList();
+            //var articleResult = _db.requestsArticles.Where(e => e.articlesId == id).ToList();
+            //var requestsResult = new List<requests>();
+            //var categoriesResult = new List<categories>();
             var result = ArticlesData.GetArticlesById(id);
-
+            //var categoriesList = _db.categories.ToList();
+ 
             if (result == null)
             {
                 return HttpNotFound();
             }
-            return View("~/Views/Shared/ArticlesSharedViews/_ArticlesInfoSharedView.cshtml", result);
+
+            var customArticle = new ArticlesCustomClass()
+            {
+                Id = result.Id,
+                Title = result.title,
+                Content = result.content,
+                Date = result.date,
+                IsBlocked = result.isBlocked,
+                User = result.users,
+                ImagesList = _db.images.Where(e => e.articlesId == id),
+                Categories = ArticlesData.GetArticleCategories(result.Id),
+                Requests = ArticlesData.GetArticleRequests(result.Id),
+            };
+            return View("~/Views/Shared/ArticlesSharedViews/_ArticlesInfoSharedView.cshtml", customArticle);
         }
 
 
 
 
-        // GET: Articles/Create
-        //public ActionResult CreateArticles()
-        //{
-        //    ViewBag.Categories = _db.categories.ToList();
-        //    ViewBag.UserId = new SelectList(_db.users.ToList(), "Id", "email");
-        //    ViewBag.Requests = _db.requests.ToList();
-
-        //    var model = new ArticlesCustomClass();
-        //    model.Categories = _db.categories.ToList();
-        //    model.Requests = _db.requests.ToList();
-        //    return View("~/Views/Shared/ArticlesSharedViews/_ArticlesFormsSharedView.cshtml", model);
-        //}
+        //GET: Articles/Create
+        public ActionResult CreateArticles()
+        {  
+            var model = new ArticlesCustomClass();
+            model.Categories = _db.categories.ToList();
+            model.Requests = _db.requests.ToList();
+            return PartialView("~/Views/Shared/ArticlesSharedViews/_ArticlesFormsSharedView.cshtml", model);
+        }
 
         //// POST: Articles/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CreateArticles(ArticlesCustomClass model, HttpPostedFileBase[] images)
-        //{
-        //ViewBag.Categories = _db.categories.ToList();
-        //ViewBag.UserId = new SelectList(_db.users.ToList(), "Id", "email");
-        //ViewBag.RequestId = new SelectList(_db.requests.ToList(), "Id", "title");
-        //ViewBag.Requests = _db.requests.ToList();
-
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        ArticlesData.CreateArticles(model, images);
-
-        //        return RedirectToAction("ArticlesList");
-        //    }
-        //    else
-        //    {
-        //        return View(model);
-        //    }
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult>  CreateArticles(ArticlesCustomClass model, HttpPostedFileBase[] images)
-        //{
-        //ViewBag.Categories = _db.categories.ToList();
-        //ViewBag.Requests = _db.requests.ToList();
-
-        //if (! ModelState.IsValid) {
-        // return View("~/Views/Shared/ArticlesSharedViews/_ArticlesFormsSharedView.cshtml", model);
-        //return RedirectToAction("ArticlesList");
-        //}
-        //ArticlesData.CreateArticles(model, images);
-        //    var task = _db.SaveChangesAsync();
-        //    await task;
-
-        //if (task.Exception != null)
-        //{
-        //    ModelState.AddModelError("", "Unable to add the Asset");
-        //    return View("~/Views/Shared/ArticlesSharedViews/_ArticlesFormsSharedView.cshtml", model);
-        //}
-        //return Content("success");
-        //return RedirectToAction("ArticlesList");
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult CreateArticles(ArticlesCustomClass model)
+        {      
+            if (ModelState.IsValid)
+            {
+                //var filesList = new List<HttpPostedFileBase>();
+                //for (int i = 0; i < Request.Files.Count; i++)
+                //{
+                //    HttpPostedFileBase file = Request.Files[i];
+                //    filesList.Add(file);
+                //}
+                ArticlesData.CreateArticles(model);
+                return Json(new { success = true });
+                //return RedirectToAction("ArticlesList");
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
 
 
 
         /// GET: Articles/Edit/5
         public ActionResult EditArticles(int id)
         {
-            ViewBag.Images = _db.images.Where(e => e.articlesId == id); 
-            ViewBag.ImagesCount = _db.images.Where(e => e.articlesId == id).Count();
+            //ViewBag.Images = _db.images.Where(e => e.articlesId == id); 
+            //ViewBag.ImagesCount = _db.images.Where(e => e.articlesId == id).Count();
             var result = ArticlesData.GetArticlesById(id);
-            ViewBag.Categories = _db.categories.ToList();   
+            //ViewBag.Categories = _db.categories.ToList();   
             //ViewBag.UserId = new SelectList(_db.users.ToList(), "Id", "email", result.usersId);
-            ViewBag.Requests = _db.requests.ToList();
+            //ViewBag.Requests = _db.requests.ToList();
 
             //ამ ცვლადში ვპოულობთ უკვე დამატებულ კატეგორიებს და ვაკონვერტირებთ მასივში
             var SelectedCategories = ArticlesData.GetSelectedCatagories(id).Select(e => e.categoriesId).ToArray();
@@ -175,17 +139,21 @@ namespace HowToWebApplication.Controllers
                 Id = result.Id,
                 Title = result.title,
                 Content = result.content,
+                Categories= _db.categories.ToList(),
+                Requests= _db.requests.ToList(),
                 CategoriesList = SelectedCategories,
-                RequestsList = Selectedrequests         
-            };
-            return View(customArticle);
+                RequestsList = Selectedrequests,
+                ImagesList = _db.images.Where(e => e.articlesId == id),
+
+        };
+            return View("~/Views/Shared/ArticlesSharedViews/_ArticlesEditFormsSharedView.cshtml", customArticle);
        }
 
 
         //// POST: Articles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditArticles(ArticlesCustomClass model, HttpPostedFileBase[] images)
+        public JsonResult EditArticles(ArticlesCustomClass model)
         {
             var result = _db.articles.FirstOrDefault(e => e.Id == model.Id);
             ViewBag.Categories = _db.categories.ToList();
@@ -205,10 +173,11 @@ namespace HowToWebApplication.Controllers
             // შეცვლილი მოდელის დამატება
             if (ModelState.IsValid)
                 {
-                    ArticlesData.EditArticles(model, images);
-                    return RedirectToAction("ArticlesList");
-                } 
-            return View(model);
+                    ArticlesData.EditArticles(model);
+                    return Json(new { success = true });
+                //return RedirectToAction("ArticlesList");
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -243,30 +212,44 @@ namespace HowToWebApplication.Controllers
         // GET: Articles/Delete/5
         public ActionResult DeleteArticle(int id)
         {
-            ViewBag.Categories = _db.categories.ToList();
+            //ViewBag.Categories = _db.categories.ToList();
             var result = ArticlesData.GetArticlesById(id);
             if (result == null)
             {
                 return HttpNotFound();
             }
-            return View(result);
+
+            var customArticle = new ArticlesCustomClass()
+            {
+                Id = result.Id,
+                Title = result.title,
+                Content = result.content,
+                Date = result.date,
+                IsBlocked = result.isBlocked,
+                User = result.users,
+                ImagesList = _db.images.Where(e => e.articlesId == id),
+                Categories = ArticlesData.GetArticleCategories(result.Id),
+                Requests = ArticlesData.GetArticleRequests(result.Id),
+
+            };
+            return View("~/Views/Shared/ArticlesSharedViews/_ArticlesDeleteSharedView.cshtml", customArticle);
         }
 
         //POST: Article/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteArticle(articles model)
+        public ActionResult DeleteArticle(ArticlesCustomClass model)
         {
-
+            var article = _db.articles.FirstOrDefault(e => e.Id == model.Id);
             try
             {
-                ArticlesData.FullDeleteArticle(model);
+                ArticlesData.FullDeleteArticle(article);
             }
             catch
             {
                 return View(model);
             }
-            return RedirectToAction("ArticlesList");
+            return Json(new { success = true });
         }
 
 
