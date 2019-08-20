@@ -1,8 +1,35 @@
 ﻿
 
+//$(function () {
+//    $.ajaxSetup({ cache: false });
+//    $("a[data-modal]").on("click", function (e) {
+//        $('#myModalContent').load(this.href, function () {
+//            $('#myModal').modal({
+//                keyboard: true
+//            }, 'show');
+//            bindForm(this);
+//        });
+//        return false;
+//    });
+//});
+
 $(function () {
     $.ajaxSetup({ cache: false });
-    $("a[data-modal]").on("click", function (e) {
+    $('body').on('click', 'a.modal-data', function (e) {
+        $('#myModalContent').load(this.href, function () {
+            $('#myModal').modal({
+                keyboard: true
+            }, 'show');
+            //bindForm(this);
+        });
+        return false;
+    });
+});
+
+
+$(function () {
+    $.ajaxSetup({ cache: false });
+    $('body').on('click', 'a.modal-form', function (e) {
         $('#myModalContent').load(this.href, function () {
             $('#myModal').modal({
                 keyboard: true
@@ -12,6 +39,10 @@ $(function () {
         return false;
     });
 });
+
+
+
+
 
 function bindForm(dialog) {
     //var formdata = new FormData();
@@ -23,14 +54,15 @@ function bindForm(dialog) {
     //    formdata.append(input.name, input.value);
     //});
 
-    var formdata = new FormData($('form', dialog)).get(0);
+    //var formdata = new FormData($('form')).get(0);
 
+    var form = $('form', dialog).get(0);
     $('form', dialog).submit(function () {
         $('#progress').show();
         $.ajax({
             url: this.action,
             type: this.method,
-            data: /*$(this).serialize(),*/ formdata,
+            data: new FormData(form),              /*$(this).serialize(), formdata,*/
             dataType: 'json',
             contentType: false,
             processData: false,
@@ -49,4 +81,5 @@ function bindForm(dialog) {
         return false;
     });
 }
+
 
