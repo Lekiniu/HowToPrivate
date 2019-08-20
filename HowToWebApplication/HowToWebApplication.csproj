@@ -826,10 +826,11 @@
     <Content Include="Views\Shared\EditorTemplates\Html.cshtml" />
     <Content Include="Views\Shared\ArticlesSharedViews\_ArticlesFormsSharedView.cshtml" />
     <Content Include="Views\Shared\ArticlesSharedViews\_ArticlesInfoSharedView.cshtml" />
-    <Content Include="Views\Shared\ArticlesSharedViews\_ArticlesImagesSharedView.cshtml" />
+    <Content Include="Views\Shared\ArticlesSharedViews\_ArticlesSharedInfo.cshtml" />
     <Content Include="Views\Shared\_popUpShared.cshtml" />
     <Content Include="Views\Shared\ArticlesSharedViews\_ArticlesEditFormsSharedView.cshtml" />
     <Content Include="Views\Shared\ArticlesSharedViews\_ArticlesDeleteSharedView.cshtml" />
+    <Content Include="Views\Shared\ArticlesSharedViews\_ArticleSharedForms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -168,7 +168,10 @@ namespace HowToWebApplication.Controllers
            
             // იმ მოთხოვნების წასაშლელი კოდი, რომელიც მომხმარებელმა მულტისელექტლისტიდან ამოშალა          
             var PrevSelectedRequests = TempData["PrevSelectedRequests"] as IEnumerable<int>;
-            ArticlesData.DeleteUnselectedRequest(model, PrevSelectedRequests);
+            if (PrevSelectedRequests != null)
+            {
+                ArticlesData.DeleteUnselectedRequest(model, PrevSelectedRequests);
+            }
 
             // შეცვლილი მოდელის დამატება
             if (ModelState.IsValid)
@@ -238,18 +241,19 @@ namespace HowToWebApplication.Controllers
         //POST: Article/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteArticle(ArticlesCustomClass model)
+        public JsonResult  DeleteConfirmedArticle(string articleId)
         {
-            var article = _db.articles.FirstOrDefault(e => e.Id == model.Id);
+            var artId = int.Parse(articleId);
+            var article = _db.articles.FirstOrDefault(e => e.Id == artId);
             try
             {
                 ArticlesData.FullDeleteArticle(article);
+                return Json(new { success = true });
             }
             catch
             {
-                return View(model);
+                return Json(article, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { success = true });
         }
 
 

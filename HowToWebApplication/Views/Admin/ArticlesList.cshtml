@@ -136,7 +136,7 @@
                             <span class="glyphicon glyphicon-info-sign"></span>
                         </a> |
 
-                        <a href="@Url.Action("DeleteArticle", "Admin", new { id = item.Id })" title="Delete" class="btn btn-danger btn-md modal-data">
+                        <a href="@Url.Action("DeleteArticle", "Admin", new { id = item.Id })" title="Delete" class="btn btn-danger btn-md delete-data">
                             <span class="glyphicon glyphicon-remove-sign"></span>
                         </a> |
                         @*@Html.Raw("<a data-modal='' href='/Admin/EditArticles/" + item.Id + "' id='" + item.Id + "' title='Edit' class='btn btn-success btn-md'><span class='glyphicon glyphicon-edit'> </span> </a>")*@
@@ -146,7 +146,7 @@
 
                         @if (!item.isBlocked)
                         {
-                            <a href="@Url.Action("BlockArticle", "Admin", new { id = item.Id })" title="Block" class="block-link btn btn-warning btn-md">
+                            <a href="@Url.Action("BlockArticle", "Admin", new { id = item.Id })" title="Block" class="block-link btn btn-warning btn-md" data_id = @item.Id >
                                 <span class="glyphicon glyphicon-minus-sign"></span>
                             </a>
                         }

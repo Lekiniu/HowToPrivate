@@ -1,0 +1,103 @@
+﻿@model HowToWebApplication.Models.ArticlesCustomClass
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Title)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Title)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Content)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Content)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Date)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Date)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.IsBlocked)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.IsBlocked)
+    </dd>
+    <dt>
+        Author
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.User.name)  @Html.DisplayFor(model => model.User.surname)
+    </dd>
+    <dt>
+        Categories
+    </dt>
+    <dd>
+        @foreach (var item in Model.Categories)
+        {
+            @item.name<text>&nbsp;</text>
+        }
+    </dd>
+    <dt>
+        Requests
+    </dt>
+    <dd>
+        @foreach (var item in Model.Requests)
+        {
+            @item.title<text>&nbsp;</text>
+        }
+    </dd>
+
+    <dt>
+        images
+    </dt>
+    <dd>
+        <div class="pic">
+            @if (Model.ImagesList.ToList().Count != 0)
+            {
+                foreach (var item in Model.ImagesList.ToList())
+                {
+                    <div class="img" style="position:relative; min-width: 230px; min-height: 230px; padding: 13px; display: inline-block; ">
+                        <img src="@Url.Content(item.url)" style="width:200px" ; />
+                    </div>
+                }
+            }
+            else
+            {
+                <div> სურათი არაა დამატებული </div>
+            }
+        </div>
+    </dd>
+    <dt>
+        Main image
+    </dt>
+    <dd>
+        <div class="Mainpic">
+            @{var counter = 0;}
+            @if (Model.ImagesList.ToList().Count != 0)
+            {
+                foreach (var item in Model.ImagesList.ToList())
+                {
+                    if (item.isMain == true)
+                    {
+                        counter++;
+                        <div class="img" style="position:relative; min-width: 230px; min-height: 230px; padding: 13px; display: inline-block; ">
+                            <img src="@Url.Content(item.url)" style="width:200px" ; />
+                        </div>
+                    }
+                }
+                if (counter == 0)
+                {
+                    <div> მთავარი სურათი არაა დამატებული </div>
+                }
+            }
+            else
+            {
+                <div> მთავარი სურათი არაა დამატებული </div>
+            }
+        </div>
+    </dd>
+   
+</dl>

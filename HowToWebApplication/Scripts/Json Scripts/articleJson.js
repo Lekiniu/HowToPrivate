@@ -43,7 +43,6 @@ $(function () {
 
 
 
-
 function bindForm(dialog) {
     //var formdata = new FormData();
 
@@ -83,3 +82,49 @@ function bindForm(dialog) {
 }
 
 
+
+    $(function(){
+        $.ajaxSetup({ cache: false });
+        $('body').on('click', 'a.delete-data', function (e) {
+            $('#myModalContent').load(this.href, function () {
+                $('#myModal').modal({
+                    keyboard: true
+                }, 'show');
+                deleteData();
+            });
+            return false;
+        });
+    });
+
+
+function deleteData() {
+    var id = $('#articleId').val();
+    var form = $('#__AjaxAntiForgeryForm');
+    var token = $('input[name="__RequestVerificationToken"]', form).val();
+    $('#submitBtn').on('click',function () {
+            $('#progress').show();
+        $.ajax({
+            url: 'DeleteConfirmedArticle',
+            type: 'POST',
+            data: {
+                __RequestVerificationToken: token,
+                articleId: id
+            },
+                //dataType: 'json',
+                //contentType: 'application/json; charset=utf-8',
+                //processData: false,
+                success: function (result) {
+                    if (result.success) {
+                        $('#myModal').modal('hide');
+                        $('#progress').hide();
+                        location.reload();
+                    } else {
+                        $('#progress').hide();
+                        $('#myModalContent').html(result);
+                        deleteData();
+                    }
+                }
+            });
+            return false;
+        });
+    }
