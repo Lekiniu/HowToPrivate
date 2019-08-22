@@ -4,21 +4,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>*@
 
+
+
+
+
+
 <h2>Articles</h2>
 <br />
-
 <p>
 
-    @*<button type="button" class="btn btn-primary btn-md modal-form" data-toggle="modal" data-url="@Url.Action("CreateArticles","Admin")" id="btnCreateAsset">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Article
-        </button>*@
+
 
     <a href="@Url.Action("CreateArticles", "Admin")" id="btnCreateAsset" title="Create" data-toggle="modal" class="btn btn-primary btn-md modal-form">
         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add Article
     </a>
-    @*<a class="btn btn-primary  btn-md" data-modal="" href="/Admin/CreateArticles" id="btnCreate">
-            <span class="glyphicon glyphicon-plus-sign"></span>Add Article
-        </a>*@
+
 </p>
 
 @using (Html.BeginForm("MultiDelete", "Admin", FormMethod.Post))
@@ -139,14 +139,11 @@
                         <a href="@Url.Action("DeleteArticle", "Admin", new { id = item.Id })" title="Delete" class="btn btn-danger btn-md delete-data">
                             <span class="glyphicon glyphicon-remove-sign"></span>
                         </a> |
-                        @*@Html.Raw("<a data-modal='' href='/Admin/EditArticles/" + item.Id + "' id='" + item.Id + "' title='Edit' class='btn btn-success btn-md'><span class='glyphicon glyphicon-edit'> </span> </a>")*@
-                        @*@Html.Raw("<a data-modal='' href='/Admin/ArticlesDetails/" + item.Id + "' id='" + item.Id + "' title='Details' class='btn btn-info btn-md'><span class='glyphicon glyphicon-info-sign'> </span> </a>")*@
-                        @*@Html.Raw("<a data-modal='' href='/Admin/DeleteArticle/" + item.Id + "' id='" + item.Id + "' title='Delete' class='btn btn-danger btn-md'><span class='glyphicon glyphicon-remove-sign'> </span> </a>")*@
 
 
                         @if (!item.isBlocked)
                         {
-                            <a href="@Url.Action("BlockArticle", "Admin", new { id = item.Id })" title="Block" class="block-link btn btn-warning btn-md" data_id = @item.Id >
+                            <a href="@Url.Action("BlockArticle", "Admin", new { id = item.Id })" title="Block" class="block-link btn btn-warning btn-md" data_id=@item.Id>
                                 <span class="glyphicon glyphicon-minus-sign"></span>
                             </a>
                         }
@@ -175,12 +172,15 @@
 </div>
 
 
+
 <!-- PopUp divs -->
 @Html.Partial("~/Views/Shared/_popUpShared.cshtml")
 
 @Scripts.Render("~/scripts/Json Scripts/articleJson.js")
 
-<script src="~/Scripts/Json Scripts/articleJson.js"></script>
+
+
+@*<script src="~/Scripts/Json Scripts/articleJson.js"></script>*@
 
 
 <script src="~/Scripts/block-unblock.js"></script>

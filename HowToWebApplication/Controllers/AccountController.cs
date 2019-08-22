@@ -65,14 +65,15 @@ namespace HowToWebApplication.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            var model = new LoginViewModel();
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View("~/Views/Shared/AccountSharedViews/_LoginSharedView.cshtml", model);
         }
 
         // Post: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(LoginViewModel user)
+        public JsonResult Login(LoginViewModel user)
         {
             if (ModelState.IsValid && dataProvider.ValidLoginAdmin(user))
             {
@@ -85,18 +86,18 @@ namespace HowToWebApplication.Controllers
                         email = user.Email,
                         categoriesId = dataProvider.LoginCategory(user).categoriesId
                     });
-                    return RedirectToAction("Index", "Admin");
+                    return Json(new { success = true });
                 }
                 else
                 {
                     ViewBag.Error = "თქვენ დაბლოკილი ხართ. კითხვების შემთხვევაში მოგვწერეთ საიტზე მითითებულ იმეილზე.";
-                    return View();
+                    return Json(user, JsonRequestBehavior.AllowGet);
                 }
             }
             else
             {
                 ViewBag.Error = "არასწორადაა მონაცემები შეყვანილი";
-                return View();
+                return Json(user, JsonRequestBehavior.AllowGet);
             }
         }
         
@@ -179,14 +180,50 @@ namespace HowToWebApplication.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var model = new RegisterViewModel();
+            return View("~/Views/Shared/AccountSharedViews/_RegisterSharedView.cshtml", model);
         }
+
+        // POST: /Account/Register
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Register(RegisterViewModel model)
+        //{
+        //    DateTime localDate = DateTime.Now;
+        //    if (ModelState.IsValid)
+        //    {
+        //        dataProvider.AddUser(new users()
+        //        {
+        //            name = model.Name,
+        //            surname = model.Surname,
+        //            email = model.Email,
+        //            password = SHA.GenerateSHA512String(model.Password),
+        //            registerDate = localDate,
+        //            isActive = true,
+        //            categoriesId = userData.GetUserCategory().Id,
+        //        });
+        //    }
+        //    if (ModelState.IsValid && dataProvider.ValidLoginUser(new LoginViewModel()
+        //    { Email = model.Email, Password = model.Password }))
+        //    {
+        //        LoginHelper.CreateUser(new users()
+        //        {
+        //            password = model.Password,
+        //            email = model.Email,
+        //            categoriesId = userData.GetUserCategory().Id,
+        //        });
+        //        return RedirectToAction("UserList", "Admin");
+        //    }
+        //    return View(model);
+        //}
+
 
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public JsonResult Register(RegisterViewModel model)
         {
             DateTime localDate = DateTime.Now;
             if (ModelState.IsValid)
@@ -211,12 +248,10 @@ namespace HowToWebApplication.Controllers
                     email = model.Email,
                     categoriesId = userData.GetUserCategory().Id,
                 });
-                return RedirectToAction("UserList", "Admin");
+                return Json(new { success = true });
             }
-            return View(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
-
-
 
         //
         // POST: /Account/Register

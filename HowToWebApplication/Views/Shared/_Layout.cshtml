@@ -4,14 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @*<title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")*@
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-        <link href="~/Content/Site.css" rel="stylesheet" /> 
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 
     <!-- js files -->
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 
     <!-- datatables css -->
@@ -20,7 +22,7 @@
 
     <link href="~/Content/_popUpSharedStyle.css" rel="stylesheet" />
 
-
+    
 
 </head>
 <body>
@@ -44,20 +46,40 @@
         <h1>Admin-HowTo</h1>
         @RenderBody()
         <hr />
+
+        <!-- modal placeholder-->
+        <div id='myAccountModal' class='modal fade in'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myAccountModalContent'></div>
+                </div>
+            </div>
+        </div>
+
+        <div id='myLoginModal' class='modal fade in'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myLoginModalContent'></div>
+                </div>
+            </div>
+        </div>
+
         <footer></footer>
     </div>
+
+
+
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")*@
 
 
     <!-- js files -->
-  
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    @*<script src="~/Scripts/jquery-3.3.1.intellisense.js"></script>*@
 
+    <script src="~/Scripts/Json Scripts/registerJson.js"></script>
 
 
     @RenderSection("scripts", required: false)
