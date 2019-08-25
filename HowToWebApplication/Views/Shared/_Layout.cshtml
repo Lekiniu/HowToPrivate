@@ -6,6 +6,9 @@
     @*<title>@ViewBag.Title - My ASP.NET Application</title>
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
+
+
+   
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
@@ -79,8 +82,8 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-    <script src="~/Scripts/Json Scripts/registerJson.js"></script>
-
+    @*<script src="~/Scripts/Json Scripts/registerJson.js"></script>*@
+    @Scripts.Render("~/scripts/Json Scripts/registerJson.js")
 
     @RenderSection("scripts", required: false)
 

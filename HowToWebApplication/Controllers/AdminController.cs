@@ -186,7 +186,7 @@ namespace HowToWebApplication.Controllers
 
          [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult EditMainImage(int id, int primary)
+        public JsonResult EditMainImage(int id, int primary)
         {
             var oldMain = _db.images.Where(x => x.articlesId == id && x.isMain == true).FirstOrDefault();
 
@@ -207,7 +207,7 @@ namespace HowToWebApplication.Controllers
 
             }          
             _db.SaveChanges();
-            return RedirectToAction("ArticlesList");
+            return Json(new { success = true });
         }
     
 
@@ -259,19 +259,23 @@ namespace HowToWebApplication.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteImages(int id,int primary)
+        public JsonResult DeleteImages(int id,int primary)
         {
             //var articleIds = _db.articles.FirstOrDefault(e => e.Id == id);
             var result = _db.images.FirstOrDefault(x => x.articlesId == id && x.Id == primary);
             try
             {
+                
                 ArticlesData.DeleteImages(result);
+                //ViewBag.ImageDeleteConfirm="Image has been deleted";
             }
             catch
             {
-                return View(result);
+                //return View(result);
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            return RedirectToAction("ArticlesList");
+            //return RedirectToAction("ArticlesList");
+            return Json(new { success = true });
         }
 
 

@@ -286,6 +286,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\example.css" />
     <Content Include="Content\_popUpSharedStyle.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -754,10 +755,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Json Scripts\articleJson.js" />
+    <Content Include="Scripts\Json Scripts\artImgJason.js" />
     <Content Include="Scripts\Json Scripts\registerJson.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\articleMultidropdown.js" />
     <Content Include="Scripts\multiCheckDelete.js" />
+    <Content Include="Scripts\reqChechBox.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -834,6 +837,7 @@
     <Content Include="Views\Shared\ArticlesSharedViews\_ArticleSharedForms.cshtml" />
     <Content Include="Views\Shared\AccountSharedViews\_RegisterSharedView.cshtml" />
     <Content Include="Views\Shared\AccountSharedViews\_LoginSharedView.cshtml" />
+    <Content Include="Views\Shared\ArticlesSharedViews\_example.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

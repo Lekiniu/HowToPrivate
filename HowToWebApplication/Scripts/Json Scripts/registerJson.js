@@ -8,19 +8,24 @@ $(function () {
             $('#myAccountModal').modal({
                 keyboard: true
             }, 'show');
-            bindForm(this);
+            bindRegistratioForm(this);
         });
         return false;
     });
 });
 
-function bindForm(dialog) {
+function bindRegistratioForm(dialog) {
     $('form', dialog).submit(function () {
+        //var infodata = (this).serialize();
+        var form = $('form', dialog).get(0);
         $('#progress').show();
         $.ajax({
             url: this.action,
             type: this.method,
-            data:(this).serialize(),
+            data: new FormData(form),             
+            dataType: 'json',
+            contentType: false,
+            processData: false,
             success: function (result) {
                 if (result.success) {
                     $('#myAccountModal').modal('hide');
@@ -28,8 +33,9 @@ function bindForm(dialog) {
                     location.reload();
                 } else {
                     $('#progress').hide();
-                    $('#myAccountModalContent').html(result);
-                    bindForm(this);
+                    //$('#myAccountModalContent').html(result);
+                    bindRegistratioForm();
+                    //alert("ola");
                 }
             }
         });
@@ -55,11 +61,15 @@ $(function () {
 
 function bindLoginForm(dialog) {
     $('form', dialog).submit(function () {
+        var form = $('form', dialog).get(0);
         $('#progress').show();
         $.ajax({
             url: this.action,
             type: this.method,
-            data: (this).serialize(),
+            data: new FormData(form),
+            dataType: 'json',
+            contentType: false,
+            processData: false,
             success: function (result) {
                 if (result.success) {
                     $('#myLoginModal').modal('hide');
@@ -67,8 +77,8 @@ function bindLoginForm(dialog) {
                     location.reload();
                 } else {
                     $('#progress').hide();
-                    $('#myLoginModalContent').html(result);
-                    bindLoginForm(this);
+                    //$('#myLoginModalContent').html(result);
+                    bindLoginForm();
                 }
             }
         });
@@ -87,7 +97,7 @@ $(function () {
             $('#myAccountModal').modal({
                 keyboard: true
             }, 'show');
-            bindForm(this);
+            bindForm();
         });
         return false;
     });

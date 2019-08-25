@@ -91,13 +91,13 @@ namespace HowToWebApplication.Controllers
                 else
                 {
                     ViewBag.Error = "თქვენ დაბლოკილი ხართ. კითხვების შემთხვევაში მოგვწერეთ საიტზე მითითებულ იმეილზე.";
-                    return Json(user, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false });
                 }
             }
             else
             {
                 ViewBag.Error = "არასწორადაა მონაცემები შეყვანილი";
-                return Json(user, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false });
             }
         }
         

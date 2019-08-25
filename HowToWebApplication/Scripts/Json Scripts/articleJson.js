@@ -17,7 +17,7 @@ $(function () {
     $.ajaxSetup({ cache: false });
     $('body').on('click', 'a.modal-data', function (e) {
         $('#myModalContent').load(this.href, function () {
-            $('#myModal').modal({
+            $('#myModal').appendTo("body").modal({
                 keyboard: true
             }, 'show');
             //bindForm(this);
@@ -27,15 +27,18 @@ $(function () {
 });
 
 
+
+
 $(function () {
     $.ajaxSetup({ cache: false });
     $('body').on('click', 'a.modal-form', function (e) {
         $('#myModalContent').load(this.href, function () {
-            $('#myModal').modal({
+            $('#myModal').appendTo("body").modal({
                 keyboard: true
             }, 'show');
             bindForm(this);
         });
+
         return false;
     });
 });
@@ -72,7 +75,7 @@ function bindForm(dialog) {
                     location.reload();
                 } else {
                     $('#progress').hide();
-                    $('#myModalContent').html(result);
+                    //$('#myModalContent').html(result);
                     bindForm();
                 }
             }
@@ -87,7 +90,7 @@ function bindForm(dialog) {
         $.ajaxSetup({ cache: false });
         $('body').on('click', 'a.delete-data', function (e) {
             $('#myModalContent').load(this.href, function () {
-                $('#myModal').modal({
+                $('#myModal').appendTo("body").modal({
                     keyboard: true
                 }, 'show');
                 deleteData();
@@ -110,9 +113,6 @@ function deleteData() {
                 __RequestVerificationToken: token,
                 articleId: id
             },
-                //dataType: 'json',
-                //contentType: 'application/json; charset=utf-8',
-                //processData: false,
                 success: function (result) {
                     if (result.success) {
                         $('#myModal').modal('hide');
