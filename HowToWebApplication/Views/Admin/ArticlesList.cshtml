@@ -1,33 +1,57 @@
 ﻿@model IEnumerable<HowToWebApplication.Models.articles>
 
 
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet">
 
+
+
 <style>
-    .btn{
-        margin-top:5px;
+    .btn {
+        margin-top: 5px;
+    }
+    #btnCreateAsset{
+        float:right;
+        margin-top:15px;
+     
+    }
+
+    #headerTags {
+        margin-left: -1rem;
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    #selectDropdown, #headerTags {
+        display: inline-block;
     }
 </style>
 
 
+<div id="headerTags">
+    <h2>Articles</h2>
+    <br />
+    <p>
+        <a href="@Url.Action("CreateArticles", "Admin")" id="btnCreateAsset" title="Create" data-toggle="modal" class="btn btn-primary btn-md modal-form">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add Article
+        </a>
+    </p>
 
-<h2>Articles</h2>
+    <div id="selectDropdown">
+        @Html.DropDownList("Id", (List<SelectListItem>)ViewBag.Cats, "-- Select a Category --", new { @onchange = "CallChangefunc(this.value)", @class = "form-control" })
+    </div>
+</div>
 <br />
-<p>
-    <a href="@Url.Action("CreateArticles", "Admin")" id="btnCreateAsset" title="Create" data-toggle="modal" class="btn btn-primary btn-md modal-form">
-        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add Article
-    </a>
-</p>
-
+<br />
 @using (Html.BeginForm("MultiDelete", "Admin", FormMethod.Post))
 {
     <table class="table table-striped table-bordered" id="table" style="width:100%">
         <thead>
             <tr>
-                <th>
+                <td>
                     <input type="submit" value="Multi Delete" onclick="return confirm('are you sure')" class="btn btn-danger btn-sm" />
                     <input type="checkbox" id="checkBoxAll" />
-                </th>
+                </td>
                 <th>
                     Main Images
                 </th>
@@ -169,7 +193,9 @@
     </div>
 </div>
 
-
+@*<div id="myPartialView">
+        @{Html.RenderPartial("/Views/Shared/ArticlesSharedViews/_GetItem.cshtml", Model);}
+    </div>*@
 
 
 <!-- PopUp divs -->
@@ -193,60 +219,23 @@
 <script src="~/Scripts/multiCheckDelete.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
+<script>
 
-
-
-
-@*<script>
-    $(document).on("click", "#PhotoId", function (e) {
-
-        var primaryValue = $(this).val();
-    var artId = $('#articleId').val();
-            if (confirm('Are you sure?')){
-        $.ajax({
-            type: 'POST',
-            data: { 'primary': primaryValue, 'id': artId },
-            url: '@Url.Action("DeleteImages", "Admin")',
-            context: this,
-            success: function () {
-            $('.img').remove();
-            $("#pics").load(location.href + " #pics");
-            $("#main-artpic").load(location.href + " #main-artpic");
-            $("#deleteImageConfirm").css("display", "block");
+    function CallChangefunc(Id) {
+         $.ajax({
+             url: "@Url.Action("SortArticlesByCategory", "Admin")",
+             data: { Id: Id },
+            type: "Get",
+            dataType: "html",
+             success: function (data) {
+                 console.log(data);
+                //Whatever result you have got from your controller with html partial view replace with a specific html.
+                 $("#table").html( data ); // HTML DOM replace
             }
-            });
-            }
-            return false;
-            });*@
-
-
-@*//script for Main Image*@
-
-@*$(document).ready(function () {
-                if (localStorage.selected) {
-                $("#" + localStorage.selected).attr('checked', true);
-                }
-                $('.radioButton').click(function () {
-                localStorage.setItem("selected", this.id);
-                });
-                });
-
-
-
-
-                $(document).on("click", ".radioButton", function () {
-                var primaryValue = $(this).val();
-                var artId = $('#articleId').val();
-                if (confirm('Are you sure?')){
-                $.ajax({
-                type: 'POST',
-                data: { 'primary': primaryValue, 'id': artId },
-                url: '@Url.Action("EditMainImage", "Admin")',
-                context: this,
-                success: function () {
-                $("#main-artpic").load(location.href + " #main-artpic");
-                }
-                });
-                }
         });
-    </script>*@
+    }
+
+</script>
+
+
+

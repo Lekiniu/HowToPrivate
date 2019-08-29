@@ -1,0 +1,161 @@
+﻿
+@model IEnumerable<HowToWebApplication.Models.articles>
+
+
+@{
+    Layout = null;
+    var categoriesList = (IEnumerable<HowToWebApplication.Models.categories>)TempData["categories"];
+    //var categoriesList = result.ToList();
+}
+
+
+
+@using (Html.BeginForm("MultiDelete", "Admin", FormMethod.Post))
+{
+    <table class="table table-striped table-bordered" id="table" style="width:100%">
+        <thead>
+            <tr>
+                <td>
+                    <input type="submit" value="Multi Delete" onclick="return confirm('are you sure')" class="btn btn-danger btn-sm" />
+                    <input type="checkbox" id="checkBoxAll" />
+                </td>
+                <th>
+                    Main Images
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.isBlocked)
+                </th>
+                <th>
+                    Authors
+                </th>
+                <th>
+                    Ratings
+                </th>
+                <th>
+                    Categories
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkBoxId" value="@item.Id" name="articleId" />
+                </td>
+                <td>
+                    @{var counter = 0;}
+                    @if (item.images.Count() != 0)
+                    {
+                        foreach (var pic in item.images)
+                        {
+                            if (pic.isMain == true)
+                            {
+                                counter++;
+                                <div id="mainPic">
+                                    <img src="@Url.Content(pic.url)" style=" width: 50px; height:50px;" />
+                                </div>
+                            }
+                        }
+                        if (counter == 0)
+                        {
+                            <div id="mainPic">
+                                <img src="/images/NoImage.png" style=" width: 50px; height:50px;" />
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div id="mainPic">
+                            <img src="/images/NoImage.png" style=" width: 50px; height:50px;" />
+                        </div>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isBlocked)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.users.name)  @Html.DisplayFor(modelItem => item.users.surname)
+                </td>
+                <td>
+                    @if (item.ratings.Count() != 0)
+                    {
+
+                        @Html.DisplayFor(modelItem => item.ratings.Average(e => e.rating))
+                        break;
+                    }
+                    else
+                    {
+                        <p>---------</p>
+                    }
+                </td>
+                <td>
+                    @foreach (var cat in item.articleCategories)
+                    {
+                        foreach (var category in categoriesList)
+                        {
+                            if (cat.categoriesId == category.Id)
+                            {
+                                <p>@category.name</p>
+                            }
+                        }
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("EditArticles", "Admin", new { id = item.Id })" title="Edit" class="btn btn-success btn-md modal-form">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a> |
+
+                    <a href="@Url.Action("ArticlesDetails", "Admin", new { id = item.Id })" title="Details" class=" btn btn-info btn-md modal-data">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                    </a> |
+
+                    <a href="@Url.Action("DeleteArticle", "Admin", new { id = item.Id })" title="Delete" class="btn btn-danger btn-md delete-data">
+                        <span class="glyphicon glyphicon-remove-sign"></span>
+                    </a> |
+
+
+                    @if (!item.isBlocked)
+                    {
+                        <a href="@Url.Action("BlockArticle", "Admin", new { id = item.Id })" title="Block" class="block-link btn btn-warning btn-md" data_id=@item.Id>
+                            <span class="glyphicon glyphicon-minus-sign"></span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("UnBlockArticle", "Admin", new { id = item.Id })" title="Unblock" class="Unblock-link btn btn-default btn-md">
+                            <span class="glyphicon glyphicon-ok-sign"></span>
+                        </a>
+                    }
+
+                </td>
+            </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+
+
+
+
+
+
+
+
+

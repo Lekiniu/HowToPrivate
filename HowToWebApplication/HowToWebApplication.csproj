@@ -838,6 +838,7 @@
     <Content Include="Views\Shared\AccountSharedViews\_RegisterSharedView.cshtml" />
     <Content Include="Views\Shared\AccountSharedViews\_LoginSharedView.cshtml" />
     <Content Include="Views\Shared\ArticlesSharedViews\_example.cshtml" />
+    <Content Include="Views\Shared\ArticlesSharedViews\_ArticlesSortedByCategorySharedView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

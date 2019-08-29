@@ -44,10 +44,33 @@ namespace HowToWebApplication.Controllers
 
         public ActionResult ArticlesList()
         {
-           
+            List<SelectListItem> dropDownItems = _db.categories.Select(c => new SelectListItem { Text = c.name, Value = c.Id.ToString()}).ToList();
+            dropDownItems.Add(new SelectListItem { Text = "All Categories", Value = "0"});
+            ViewBag.Cats = dropDownItems;
             ViewBag.Categories = _db.categories.ToList();
+            
             var result = ArticlesData.AllArticles();
+   
             return View(result);
+        }
+
+        public PartialViewResult SortArticlesByCategory(int Id)
+        {
+            var cats= _db.categories.ToList();
+            TempData["categories"] = cats;
+            //ViewBag.Categories = _db.categories.ToList();
+            TempData["CatType"] = new categories();
+            var model = new List<articles>();
+            if (Id != 0)
+            {
+                 model = ArticlesData.GetArticlesByCategoryId(Id).ToList();
+            }
+            else
+            {
+                model = ArticlesData.AllArticles().ToList();
+            }
+
+            return PartialView("/Views/Shared/ArticlesSharedViews/_ArticlesSortedByCategorySharedView.cshtml", model);
         }
 
 

@@ -123,7 +123,12 @@ namespace HowToWebApplication.Models
             return requestResult;
         }
 
-        
+        public IEnumerable<articles> GetArticlesByCategoryId(int categoryId)
+        {
+            var result = _db.articleCategories.Where(e => e.categoriesId == categoryId);
+            var products = _db.articles.Where(e => result.Any(a => a.categoriesId == categoryId && a.articlesId == e.Id));
+            return products;
+        }
 
 
         //Edit 
