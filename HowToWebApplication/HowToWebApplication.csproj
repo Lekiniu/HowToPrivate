@@ -282,6 +282,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminPanelStyles\components.css" />
+    <Content Include="Content\AdminPanelStyles\core.css" />
+    <Content Include="Content\AdminPanelStyles\icons.css" />
+    <Content Include="Content\AdminPanelStyles\pages.css" />
+    <Content Include="Content\AdminPanelStyles\responsive.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -332,6 +337,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\avatar-1.jpg" />
     <Content Include="Models\HowToDb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HowToDb.edmx</DependentUpon>
@@ -342,6 +348,17 @@
       <DependentUpon>HowToDb.edmx</DependentUpon>
       <LastGenOutput>HowToDb.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AdminPanelScripts\detect.js" />
+    <Content Include="Scripts\AdminPanelScripts\fastclick.js" />
+    <Content Include="Scripts\AdminPanelScripts\jquery.app.js" />
+    <Content Include="Scripts\AdminPanelScripts\jquery.blockUI.js" />
+    <Content Include="Scripts\AdminPanelScripts\jquery.core.js" />
+    <Content Include="Scripts\AdminPanelScripts\jquery.nicescroll.js" />
+    <Content Include="Scripts\AdminPanelScripts\jquery.scrollTo.min.js" />
+    <Content Include="Scripts\AdminPanelScripts\jquery.slimscroll.js" />
+    <Content Include="Scripts\AdminPanelScripts\modernizr.min.js" />
+    <Content Include="Scripts\AdminPanelScripts\waves.js" />
+    <Content Include="Scripts\AdminPanelScripts\wow.min.js" />
     <Content Include="Scripts\block-unblock.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -356,6 +373,17 @@
       <DependentUpon>HowToDb.edmx</DependentUpon>
     </Content>
     <Content Include="Content\icons\edit.svg" />
+    <Content Include="images\atom-icon.svg" />
+    <Content Include="Content\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="Content\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="Content\fonts\Simple-Line-Icons.woff" />
+    <Content Include="Content\fonts\Simple-Line-Icons.woff2" />
+    <Content Include="Content\fonts\themify.ttf" />
+    <Content Include="fonts\themify.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\btn.js" />
     <Content Include="Scripts\Category.js" />
@@ -756,6 +784,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Json Scripts\articleJson.js" />
     <Content Include="Scripts\Json Scripts\artImgJason.js" />
+    <Content Include="Scripts\Json Scripts\CreateJson.js" />
     <Content Include="Scripts\Json Scripts\registerJson.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\articleMultidropdown.js" />
@@ -839,10 +868,10 @@
     <Content Include="Views\Shared\AccountSharedViews\_LoginSharedView.cshtml" />
     <Content Include="Views\Shared\ArticlesSharedViews\_example.cshtml" />
     <Content Include="Views\Shared\ArticlesSharedViews\_ArticlesSortedByCategorySharedView.cshtml" />
+    <Content Include="Views\Admin\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\" />
     <Folder Include="Views\Shared\CategoriesSharedViews\" />
     <Folder Include="Views\Shared\RequestsSharedViews\" />
     <Folder Include="Views\Shared\UsersSharedViews\" />
