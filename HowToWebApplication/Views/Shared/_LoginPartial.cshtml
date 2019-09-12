@@ -21,11 +21,23 @@ else if (LoginHelper.IsLoggedIn())
     {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right">
+        @*<ul class="nav navbar-nav navbar-right">
             <li>
                 @Html.ActionLink("Hello " + LoginHelper.CurrentUser().email + "!", "UserDetails", "Users", new { id = LoginHelper.CurrentUser().Id }, null)
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()"> Log off</a></li>
+        </ul>*@
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown top-menu-item-xs">
+                <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="~/images/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
+                <ul class="dropdown-menu">
+                    <li><a href="@Url.Action("UserDetails", "Admin", new { id =  LoginHelper.CurrentUser().Id})"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
+                    @*<li><a href="javascript:void(0)"><i class="ti-settings m-r-10 text-custom"></i> Settings</a></li>
+                    <li><a href="javascript:void(0)"><i class="ti-lock m-r-10 text-custom"></i> Lock screen</a></li>*@
+                    <li class="divider"></li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="ti-power-off m-r-10 text-danger"></i> Logout</a></li>
+                </ul>
+            </li>
         </ul>
     }
 }

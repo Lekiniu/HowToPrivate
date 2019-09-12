@@ -1,5 +1,8 @@
 ﻿@model HowToWebApplication.Models.ArticlesCustomClass
 
+
+
+
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.Title)
@@ -51,24 +54,21 @@
     </dd>
 
     <dt>
-        images
+        Images
     </dt>
     <dd>
-        <div class="pic">
-            @if (Model.ImagesList.ToList().Count != 0)
-            {
-                foreach (var item in Model.ImagesList.ToList())
-                {
-                    <div class="img" style="position:relative; min-width: 230px; min-height: 230px; padding: 13px; display: inline-block; ">
-                        <img src="@Url.Content(item.url)" style="width:200px" ; />
-                    </div>
-                }
-            }
-            else
-            {
-                <div> სურათი არაა დამატებული </div>
-            }
-        </div>
+        @if (Model.ImagesList.ToList().Count != 0)
+        {
+            <p>
+                <a href="@Url.Action("ArticleImageList", "Admin", new { id = Model.Id, IsInfo = true })" id="btnCreateAsset" title="Create" data-toggle="modal" class="btn btn-primary btn-sm modal-Images" style="float:none; margin-top: 0px;">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Images
+                </a>
+            </p>
+        }
+        else
+        {
+            <div>  სურათები არაა დამატებული </div>
+        }
     </dd>
     <dt>
         Main image
@@ -95,9 +95,9 @@
             }
             else
             {
-                <div> მთავარი სურათი არაა დამატებული </div>
+                <div>  მთავარი სურათი არაა დამატებული </div>
             }
         </div>
     </dd>
-   
+
 </dl>

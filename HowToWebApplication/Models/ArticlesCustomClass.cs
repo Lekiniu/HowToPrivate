@@ -14,13 +14,19 @@ namespace HowToWebApplication.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Title")]
+        //[Display(Name = "Title")]
+        //[Required(ErrorMessageResourceType = typeof(Resources.Global),
+        //          ErrorMessageResourceName = "NameRequired")]
+        [Display(Name = "Title", ResourceType = typeof(Resources.Global))]
         public string Title { get; set; }
 
 
         [Required]
         [AllowHtml]
-        [Display(Name = "Content")]
+        //[Display(Name = "Content")]
+        //[Required(ErrorMessageResourceType = typeof(Resources.Global),
+        //          ErrorMessageResourceName = "CountryRequired")]
+        [Display(Name = "Content", ResourceType = typeof(Resources.Global))]
         public string Content { get; set; }
 
        

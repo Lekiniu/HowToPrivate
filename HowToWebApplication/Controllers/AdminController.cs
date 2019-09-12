@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace HowToWebApplication.Controllers
 {
     //[AdminFilter]
+    [Culture]
     public class AdminController : Controller
     {
         HowToDbEntities _db = new HowToDbEntities();
@@ -53,6 +54,36 @@ namespace HowToWebApplication.Controllers
    
             return View(result);
         }
+
+        
+        public ActionResult ChangeCulture(string lang)
+        {
+            string returnUrl = Request.UrlReferrer.AbsolutePath;
+            // Список культур
+            List<string> cultures = new List<string>() { "en-US", "ka-GE" };
+            if (!cultures.Contains(lang))
+            {
+                lang = "en-US";
+            }
+            // Сохраняем выбранную культуру в куки
+            HttpCookie cookie = Request.Cookies["lang"];
+            if (cookie != null)
+                cookie.Value = lang;   // если куки уже установлено, то обновляем значение
+            else
+            {
+
+                cookie = new HttpCookie("lang");
+                cookie.HttpOnly = false;
+                cookie.Value = lang;
+                cookie.Expires = DateTime.Now.AddYears(1);
+            }
+            Response.Cookies.Add(cookie);
+            return Redirect(returnUrl);
+        }
+
+
+
+
 
         public PartialViewResult SortArticlesByCategory(int Id)
         {
@@ -104,7 +135,23 @@ namespace HowToWebApplication.Controllers
             return View("~/Views/Shared/ArticlesSharedViews/_ArticlesInfoSharedView.cshtml", customArticle);
         }
 
+        //GET: Articles/Create
+        public ActionResult ArticleImageList(int id, bool IsInfo)
+        {
+            var articleTitle = _db.articles.FirstOrDefault(e => e.Id == id);
+            var ImagesResult = ArticlesData.GetImagesByArticleId(id);
+            var model = new ArticlesCustomClass()
+            {
+            Title = articleTitle.title,
+            ImagesList = ImagesResult,
+            };
 
+            if (IsInfo != true)
+                return PartialView("~/Views/Shared/ArticlesSharedViews/_ArticleEditImgSharedView.cshtml", model);
+            else
+                return PartialView("~/Views/Shared/ArticlesSharedViews/_ArticleImgSharedView.cshtml", model);
+        }
+        
 
 
         //GET: Articles/Create
@@ -696,7 +743,7 @@ namespace HowToWebApplication.Controllers
         #region user
         // GET: Users
 
-        public ActionResult UserList()
+        public ActionResult UsersList()
         {
             var result = UserData.AllUsers();
             return View(result);

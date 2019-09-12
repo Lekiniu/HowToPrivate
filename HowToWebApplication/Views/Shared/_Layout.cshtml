@@ -39,23 +39,37 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css" rel="stylesheet" />
     <link href="~/Content/_popUpSharedStyle.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+    <style>
+        .tz-gallery img {
+            height: 100%;
+        }
 
+        .tz-gallery a {
+            width: 150px;
+            height: 150px;
+            display: inline-block;
+            overflow: hidden;
+            margin: 4px 6px;
+            box-shadow: 0 0 4px -1px #000;
+        }
+    </style>
 
     <style>
         body {
             background: white;
-            height:auto;
+            height: auto;
         }
 
         .footer {
             background: #ebeff2;
-            bottom:auto;
+            bottom: auto;
         }
 
-      
+
 
         .media-body h5 {
-            line-height:35px;
+            line-height: 35px;
         }
     </style>
 
@@ -101,7 +115,9 @@
 
 
                         <ul class="nav navbar-nav navbar-right pull-right">
-
+                            <li>
+                                @Html.Partial("/Views/Shared/_LanguagesShareView.cshtml")
+                            </li>
                             <li class="dropdown top-menu-item-xs">
                                 <a href="#" @*data-target="#"*@ class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
                                     <i class="icon-plus"></i>@*<span class="badge badge-xs badge-danger"></span>*@
@@ -117,7 +133,7 @@
                                                 </div>
                                                 <div class="media-body">
                                                     <h5 class="media-heading">Add New Article</h5>
-                                                   
+
                                                 </div>
                                             </div>
                                         </a>
@@ -130,7 +146,7 @@
                                                 </div>
                                                 <div class="media-body">
                                                     <h5 class="media-heading">Add New Category</h5>
-                                                    
+
                                                 </div>
                                             </div>
                                         </a>
@@ -143,7 +159,7 @@
                                                 </div>
                                                 <div class="media-body">
                                                     <h5 class="media-heading">Add New Request</h5>
-                                                   
+
                                                 </div>
                                             </div>
                                         </a>
@@ -156,14 +172,14 @@
                                                 </div>
                                                 <div class="media-body">
                                                     <h5 class="media-heading">Add New User</h5>
-                                                   
+
                                                 </div>
                                             </div>
                                         </a>
 
-                                        
 
-                                   
+
+
                                 </ul>
                             </li>
 
@@ -175,16 +191,7 @@
                             </li>
 
 
-                            <li class="dropdown top-menu-item-xs">
-                                <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="~/images/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
-                                    <li><a href="javascript:void(0)"><i class="ti-settings m-r-10 text-custom"></i> Settings</a></li>
-                                    <li><a href="javascript:void(0)"><i class="ti-lock m-r-10 text-custom"></i> Lock screen</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="javascript:void(0)"><i class="ti-power-off m-r-10 text-danger"></i> Logout</a></li>
-                                </ul>
-                            </li>
+                            @Html.Partial("_LoginPartial")
                         </ul>
                     </div>
                     <!--/.nav-collapse -->
@@ -206,16 +213,16 @@
                             <a href="@Url.Action("ArticlesList", "Admin")" class="waves-effect"><i class="ti-files"></i> <span> Articles </span> </a>
                         </li>
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-view-grid"></i> <span> Categories </span> </a>
+                            <a href="@Url.Action("CategoriesList", "Admin")"  class="waves-effect"><i class="ti-view-grid"></i> <span> Categories </span> </a>
                         </li>
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-help-alt"></i> <span> Requests </span> </a>
+                            <a href="@Url.Action("RequestsList", "Admin")"  class="waves-effect"><i class="ti-help-alt"></i> <span> Requests </span> </a>
                         </li>
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-user"></i> <span> Users </span> </a>
+                            <a href="@Url.Action("UsersList", "Admin")"  class="waves-effect"><i class="ti-user"></i> <span> Users </span> </a>
                         </li>
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="ti-email"></i> <span> Contact </span> </a>
+                            <a href="@Url.Action("ContactList", "Admin")"  class="waves-effect"><i class="ti-email"></i> <span> Contact </span> </a>
                         </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -235,7 +242,7 @@
                     @*<div style="min-height: 3000px;"></div>*@
                 </div> <!-- container -->
             </div> <!-- content -->
-
+           
             <footer class="footer text-right">
                 © 2016. All rights reserved.
             </footer>
@@ -298,7 +305,8 @@
 
     @RenderSection("scripts", required: false)
 
-
+    <!-- Scripts for images -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
     
 </body>
 </html>

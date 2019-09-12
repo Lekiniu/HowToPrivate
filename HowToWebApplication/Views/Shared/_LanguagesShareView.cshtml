@@ -1,0 +1,25 @@
+﻿@*
+    @*<input type="submit" name="submit" value="@Resources.Global.ChooseLang">*@
+
+@using (Html.BeginForm("ChangeCulture", "Admin"))
+{
+    <div id="LandBox" class="form-group" style="margin-top: 10px; margin-bottom:0px;">      
+        <select name="lang" class="form-control" id="gender1" style="height:auto;">
+            <option disabled selected>@Resources.Global.ChooseLang</option>
+            <option value="en-US">English</option>
+            <option value="ka-GE">  ქართული</option>
+        </select>
+    </div>
+}
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#LandBox').on('change', function (e) {
+            $(this).parents('form').submit();
+        });
+    });
+</script>

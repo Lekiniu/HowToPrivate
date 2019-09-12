@@ -1,0 +1,41 @@
+﻿@model HowToWebApplication.Models.ArticlesCustomClass
+
+
+
+
+
+@{
+    Layout = null;
+}
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+    <h3 class="modal-title">Images of @Model.Title</h3>
+</div>
+
+<div class="modal-body ArticleImages">
+
+    <div class="tz-gallery">
+        <div class="row">
+            <div id="pics">
+                @foreach (var item in Model.ImagesList.ToList())
+                {
+                    <div class=" img col-sm-6 col-md-3">
+                        <a class="lightbox" href="@Url.Content(item.url)">
+                            <img class="imgClass" id="imgId" src="@Url.Content(item.url)" alt="Park">
+                        </a>
+                        <button class="btn btn-default" value="@item.Id" id="PhotoId" style=" position: absolute; margin:0; top:0px; right: 30px; ">X</button>
+                        <input type="radio" class="radioButton" id="@item.Id" name="Primary" value="@item.Id">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-warning" data-dismiss="modal">Close</button>
+</div>
+

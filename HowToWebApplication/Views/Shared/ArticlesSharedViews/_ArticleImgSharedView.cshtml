@@ -1,0 +1,39 @@
+﻿@model HowToWebApplication.Models.ArticlesCustomClass
+
+
+
+@*<script type="text/javascript" src="https://unpkg.com/nanogallery2@2.4.1/dist/jquery.nanogallery2.min.js"></script>
+    <link href="https://unpkg.com/nanogallery2@2.4.1/dist/css/nanogallery2.min.css" rel="stylesheet" type="text/css">*@
+
+
+@{
+    Layout = null;
+}
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+    <h3 class="modal-title">Images of @Model.Title</h3>
+</div>
+
+<div class="modal-body ArticleImages">
+    <div class="tz-gallery">
+        @foreach (var item in Model.ImagesList.ToList())
+        {
+            <a href="@Url.Content(item.url)">
+                <img src="@Url.Content(item.url)" alt="Second image">
+            </a>
+        }
+    </div>
+</div>
+
+
+
+<div class="modal-footer">
+    <button class="btn btn-warning" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    baguetteBox.run('.tz-gallery');
+</script>

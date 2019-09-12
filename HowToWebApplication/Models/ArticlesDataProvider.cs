@@ -28,7 +28,12 @@ namespace HowToWebApplication.Models
             return _db.articles.FirstOrDefault(e => e.Id == id);
         }
 
-        
+
+        public IEnumerable<images> GetImagesByArticleId(int id)
+        {
+            return _db.images.Where(e => e.articlesId == id);
+        }
+
 
         //Create
         public void CreateArticles(ArticlesCustomClass article)

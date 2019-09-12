@@ -238,3 +238,8 @@ D:\Programming\HowTo\HowToWebApplication\obj\Debug\HowToWebApplication.csproj.Co
 D:\Programming\HowTo\HowToWebApplication\obj\Debug\HowToWebApplication.csproj.CopyComplete
 D:\Programming\HowTo\HowToWebApplication\obj\Debug\HowToWebApplication.dll
 D:\Programming\HowTo\HowToWebApplication\obj\Debug\HowToWebApplication.pdb
+D:\Programming\HowTo\HowToWebApplication\obj\Debug\HowToWebApplication.Resources.Global.resources
+D:\Programming\HowTo\HowToWebApplication\obj\Debug\HowToWebApplication.csproj.GenerateResource.cache
+D:\Programming\HowTo\HowToWebApplication\bin\ka-GE\HowToWebApplication.resources.dll
+D:\Programming\HowTo\HowToWebApplication\obj\Debug\HowToWebApplication.Resources.Global.ka-GE.resources
+D:\Programming\HowTo\HowToWebApplication\obj\Debug\ka-GE\HowToWebApplication.resources.dll

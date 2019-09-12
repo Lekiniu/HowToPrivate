@@ -17,11 +17,13 @@ namespace HowToWebApplication.Models
         public int Number { get; set;}
 
         [Required]
-        [Display(Name = "title")]
+        //[Display(Name = "Title")]
+        [Display(Name = "Title", ResourceType = typeof(Resources.Global))]
         public string Title { get; set; }
 
         [Required]
-        [Display(Name = "Content")]
+        //[Display(Name = "Content")]
+        [Display(Name = "Content", ResourceType = typeof(Resources.Global))]
         public string Content { get; set; }
 
         [Required]

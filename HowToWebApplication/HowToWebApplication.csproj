@@ -205,12 +205,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CultureAttribute.cs" />
     <Compile Include="Helpers\LoginHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\articleCategories.cs">
       <DependentUpon>HowToDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArticleContext .cs" />
     <Compile Include="Models\articles.cs">
       <DependentUpon>HowToDb.tt</DependentUpon>
     </Compile>
@@ -244,6 +246,7 @@
     <Compile Include="Models\images.cs">
       <DependentUpon>HowToDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LocalizedControllerActivator.cs" />
     <Compile Include="Models\MenuDataProvider.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -279,6 +282,16 @@
       <DependentUpon>HowToDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Global.ka-GE.Designer.cs">
+      <DependentUpon>Global.ka-GE.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Global.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Global.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -785,6 +798,7 @@
     <Content Include="Scripts\Json Scripts\articleJson.js" />
     <Content Include="Scripts\Json Scripts\artImgJason.js" />
     <Content Include="Scripts\Json Scripts\CreateJson.js" />
+    <Content Include="Scripts\Json Scripts\ImagesListJason.js" />
     <Content Include="Scripts\Json Scripts\registerJson.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\articleMultidropdown.js" />
@@ -824,7 +838,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\Admin\UsersList.cshtml" />
     <Content Include="Views\Admin\UserDetails.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\Admin\DeleteUser.cshtml" />
@@ -866,9 +880,11 @@
     <Content Include="Views\Shared\ArticlesSharedViews\_ArticleSharedForms.cshtml" />
     <Content Include="Views\Shared\AccountSharedViews\_RegisterSharedView.cshtml" />
     <Content Include="Views\Shared\AccountSharedViews\_LoginSharedView.cshtml" />
-    <Content Include="Views\Shared\ArticlesSharedViews\_example.cshtml" />
     <Content Include="Views\Shared\ArticlesSharedViews\_ArticlesSortedByCategorySharedView.cshtml" />
     <Content Include="Views\Admin\View.cshtml" />
+    <Content Include="Views\Shared\ArticlesSharedViews\_ArticleImgSharedView.cshtml" />
+    <Content Include="Views\Shared\ArticlesSharedViews\_ArticleEditImgSharedView.cshtml" />
+    <Content Include="Views\Shared\_LanguagesShareView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -892,6 +908,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Global.ka-GE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.ka-GE.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Global.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

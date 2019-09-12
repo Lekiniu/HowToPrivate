@@ -13,10 +13,19 @@ namespace HowToWebApplication
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
+                url: "{lang}/{controller}/{action}/{id}",
+                constraints: new { lang = @"(\w{2})|(\w{2}-\w{2})" },   // en or en-US
                 defaults: new { controller = "Admin", action = "Index", id = UrlParameter.Optional }
+);
+
+
+            routes.MapRoute(
+                name: "second",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Admin", action = "ArticlesList", id = UrlParameter.Optional }
             );
         }
     }
